@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper
+	namespace="com.lawyer.system.usercenter.dao.mybatis.SysMenuFunctionMapper">
+	<!-- sys_menu_function query field -->
+	<sql id="columns">
+		id,
+		parent_id,
+		tenant_id,
+		menu_name,
+		menu_type,
+		is_valid,
+		menu_url,
+		menu_info,
+		note,
+		create_time,
+		timestamp
+	</sql>
+	
+	<sql id="querycolumns">
+		m.id,
+		m.parent_id,
+		m.tenant_id,
+		m.menu_name,
+		m.menu_type,
+		m.is_valid,
+		m.menu_url,
+		m.menu_info,
+		m.note,
+		m.create_time,
+		m.timestamp
+	</sql>
+	
+	<sql id="columnIds">
+		id
+	</sql>
+
+	<!-- sys_menu_function result map -->
+	<resultMap type="SysMenuFunction" id="SysMenuFunctionMap">
+		<result column="id" property="id" />
+		<result column="parent_id" property="parentId" />
+		<result column="tenant_id" property="tenantId" />
+		<result column="menu_name" property="menuName" />
+		<result column="menu_type" property="menuType" />
+		<result column="is_valid" property="isValid" />
+		<result column="menu_url" property="menuUrl" />
+		<result column="menu_info" property="menuInfo" />
+		<result column="note" property="note" />
+		<result column="create_time" property="createTime" />
+		<result column="timestamp" property="timestamp" />
+	</resultMap>
+	
+	<resultMap type="SysMenuFunction" id="SysMenuIdMap">
+		<result column="id" property="id" />
+		<!-- <result column="parent_id" property="parentId" />
+		<result column="tenant_id" property="tenantId" />
+		<result column="menu_name" property="menuName" />
+		<result column="menu_type" property="menuType" />
+		<result column="is_valid" property="isValid" />
+		<result column="menu_url" property="menuUrl" />
+		<result column="menu_info" property="menuInfo" />
+		<result column="note" property="note" />
+		<result column="create_time" property="createTime" />
+		<result column="timestamp" property="timestamp" /> -->
+	</resultMap>
+
+	<!-- save sys_menu_function -->
+	<insert id="save" parameterType="SysMenuFunction">
+		insert into sys_menu_function (
+		<include refid="columns" />
+		)
+		values (
+		#{id},
+		#{parentId},
+		#{tenantId},
+		#{menuName},
+		#{menuType},
+		#{isValid},
+		#{menuUrl},
+		#{menuInfo},
+		#{note},
+		#{createTime},
+		#{timestamp}
+		)
+	</insert>
+
+	<!-- update sys_menu_function -->
+	<update id="update" parameterType="SysMenuFunction">
+		UPDATE sys_menu_function
+		<set>
+			<if test="id != null">id = #{id}, </if>
+			<if test="parentId != null">parent_id = #{parentId}, </if>
+			<if test="tenantId != null">tenant_id = #{tenantId}, </if>
+			<if test="menuName != null">menu_name = #{menuName}, </if>
+			<if test="menuType != null">menu_type = #{menuType}, </if>
+			<if test="isValid != null">is_valid = #{isValid}, </if>
+			<if test="menuUrl != null">menu_url = #{menuUrl}, </if>
+			<if test="menuInfo != null">menu_info = #{menuInfo}, </if>
+			<if test="note != null">note = #{note}, </if>
+			<if test="createTime != null">create_time = #{createTime}, </if>
+			<if test="timestamp != null">timestamp = #{timestamp}, </if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<!-- 分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="SysMenuFunctionMap">
+		SELECT
+		<include refid="columns" />
+		FROM sys_menu_function
+		<where>
+			<if test="id != null and id !=''">id = #{id} </if>
+			<if test="parentId != null and parentId >= 0 ">parent_id = #{parentId} </if>
+			<if test="tenantId != null and tenantId !=''">and tenant_id = #{tenantId} </if>
+			<if test="menuName != null and menuName !=''">and menu_name like CONCAT('%','${menuName}','%')</if>
+			<if test="menuType != null and menuType !=''">and menu_type = #{menuType} </if>
+			<if test="isValid != null and isValid !=''">and is_valid = #{isValid} </if>
+			<if test="menuUrl != null and menuUrl !=''">and menu_url like CONCAT('%','${menuUrl}','%' )</if>
+			<if test="menuInfo != null and menuInfo !=''">and menu_info like CONCAT('%','${menuInfo}','%' )  </if>
+			<if test="note != null and note !=''">and note like CONCAT('%','${note}','%' ) </if>
+			<if test="createTime != null and createTime !=''">and create_time = #{createTime} </if>
+			<if test="timestamp != null and timestamp !=''">and timestamp = #{timestamp} </if>
+		</where>
+	</select>
+
+	<!-- 按条件检查URL是否存在，返回相同个数 -->
+	<select id="checkMenuUrl" parameterType="map" resultType="long">
+		SELECT
+		count(id)
+		FROM sys_menu_function
+		<where>
+			<if test="id != null and id !=''">id != #{id} </if>
+			<if test="parentId != null and parentId >= 0 ">parent_id = #{parentId} </if>
+			<if test="tenantId != null and tenantId !=''">and tenant_id = #{tenantId} </if>
+			<if test="menuName != null and menuName !=''">and menu_name = #{menuName}</if>
+			<if test="menuType != null and menuType !=''">and menu_type = #{menuType} </if>
+			<if test="isValid != null and isValid !=''">and is_valid = #{isValid} </if>
+			<if test="menuUrl != null and menuUrl !=''">and menu_url = #{menuUrl}</if>
+			<if test="menuInfo != null and menuInfo !=''">and menu_info = #{menuInfo} </if>
+			<if test="note != null and note !=''">and note = #{note}</if>
+			<if test="createTime != null and createTime !=''">and create_time = #{createTime} </if>
+			<if test="timestamp != null and timestamp !=''">and timestamp = #{timestamp} </if>
+		</where>
+	</select>
+
+	<!-- query sys_menu_function by primary key -->
+	<select id="findById" resultMap="SysMenuFunctionMap"
+		parameterType="long">
+		SELECT
+		<include refid="columns" />
+		FROM sys_menu_function where id=#{id}
+	</select>
+
+	<!-- delete sys_menu_function by primary key -->
+	<delete id="deleteById" parameterType="long">
+		delete FROM
+		sys_menu_function where id=#{id}
+	</delete>
+
+	<!-- query sys_menu_function by primary key -->
+	<select id="getMenuTree" resultMap="SysMenuFunctionMap" parameterType="long">
+		SELECT
+		<include refid="querycolumns" />
+		FROM sys_menu_function m inner  join sys_role_menu rm on m.id = rm.menu_function_id
+		left join sys_user_role ur on rm.role_id = ur.role_id
+		where m.is_valid=1 and (m.menu_type=1 or m.menu_type=2) and ur.user_session_id=#{id}
+	</select>
+	<!-- query sys_menu_function by primary key -->
+	<select id="getAllTree" resultMap="SysMenuFunctionMap">
+		SELECT
+		<include refid="columns" />
+		FROM sys_menu_function where is_valid=1
+	</select>
+	<!-- 获取所有子菜单 -->
+	<select id="getChildByParentId" resultMap="SysMenuIdMap">
+		SELECT
+		<include refid="columnIds" />
+		FROM sys_menu_function where parent_id=#{id}
+	</select>
+	
+	<select id="findByUrl" resultMap="SysMenuFunctionMap" parameterType="String">
+		SELECT
+		<include refid="columns" />
+		FROM sys_menu_function where menu_url=#{menuUrl}
+	</select>
+	
+</mapper>

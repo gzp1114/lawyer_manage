@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper
+	namespace="com.lawyer.system.usercenter.dao.mybatis.SysRoleMapper">
+
+	<!-- sys_role query field -->
+	<sql id="columns">
+
+		id,
+
+		parent_id,
+
+		tenant_id,
+
+		role_name,
+
+		note,
+
+		create_time,
+
+		timestamp
+	</sql>
+	
+	<sql id="querycolumns">
+
+		role.id,
+
+		role.parent_id,
+
+		role.tenant_id,
+
+		role.role_name,
+
+		role.note,
+
+		role.create_time,
+
+		role.timestamp
+	</sql>
+
+	<!-- sys_role result map -->
+	<resultMap type="SysRole" id="SysRoleMap">
+
+		<result column="id" property="id" />
+
+		<result column="parent_id" property="parentId" />
+
+		<result column="tenant_id" property="tenantId" />
+
+		<result column="role_name" property="roleName" />
+
+		<result column="note" property="note" />
+
+		<result column="create_time" property="createTime" />
+
+		<result column="timestamp" property="timestamp" />
+	</resultMap>
+	<!-- user_roles result map -->
+	<resultMap type="SysRole" id="roleMenuMap" extends="SysRoleMap">  
+        <collection property="menuFunctions" ofType="SysMenuFunction">  
+            <result column="menuId" property="id" />
+
+		<result column="menuParentId" property="parentId" />
+
+		<result column="menuTenantId" property="tenantId" />
+
+		<result column="menuName" property="menuName" />
+
+		<result column="menuType" property="menuType" />
+
+		<result column="isValid" property="isValid" />
+
+		<result column="menuUrl" property="menuUrl" />
+
+		<result column="menuInfo" property="menuInfo" />
+
+		<result column="menuNote" property="note" />
+
+		<result column="menuCreateTime" property="createTime" />
+
+		<result column="menuTimestamp" property="timestamp" />  
+        </collection>  
+    </resultMap>
+
+	<!-- save sys_role -->
+	<insert id="save" parameterType="SysRole">
+		<selectKey resultType="long" order="AFTER" keyProperty="id"> 
+			SELECT LAST_INSERT_ID() AS id 
+		</selectKey> 
+	
+		insert into sys_role (
+		<include refid="columns" />
+		)
+		values (
+
+		#{id},
+
+		#{parentId},
+
+		#{tenantId},
+
+		#{roleName},
+
+		#{note},
+
+		#{createTime},
+
+		#{timestamp}
+		)
+	</insert>
+
+	<!-- update sys_role -->
+	<update id="update" parameterType="SysRole">
+		UPDATE sys_role
+		<set>
+
+			<if test="id != null">id = #{id}, </if>
+
+			<if test="parentId != null">parent_id = #{parentId}, </if>
+
+			<if test="tenantId != null">tenant_id = #{tenantId}, </if>
+
+			<if test="roleName != null">role_name = #{roleName}, </if>
+
+			<if test="note != null">note = #{note}, </if>
+
+			<if test="createTime != null">create_time = #{createTime}, </if>
+
+			<if test="timestamp != null">timestamp = #{timestamp}, </if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="SysRoleMap">
+		SELECT <include refid="columns" /> FROM sys_role
+			<where>
+				<if test="id != null and id != ''">id = #{id}</if>
+				<if test="parentId != null and parentId !=''"> and parent_id = #{parentId} </if>
+				<if test="tenantId != null and tenantId !=''">and tenant_id = #{tenantId} </if>
+				<if test="roleName != null and roleName !=''">and role_name like CONCAT('%','${roleName}','%' ) </if>
+				<if test="note != null and note !=''">and note like CONCAT('%','${note}','%' )</if>
+				<if test="createTime != null and createTime !=''">and create_time = #{createTime} </if>
+				<if test="timestamp != null and timestamp !=''">and timestamp = #{timestamp} </if>
+			</where>
+	</select>
+
+	<!-- query sys_role by primary key -->
+	<select id="findById" resultMap="SysRoleMap" parameterType="long">
+		SELECT
+		<include refid="columns" />
+		FROM sys_role where id=#{id}
+	</select>
+	<select id="selectRoleMenuFunctions" resultMap="roleMenuMap" parameterType="long">
+		SELECT <include refid="querycolumns" />,mf.id as menuId, mf.parent_id as menuParentId, mf.tenant_id as tenantId, mf.menu_name as menuName,
+		mf.menu_type as menuType, mf.is_valid as isValid, mf.menu_url as menuUrl, mf.menu_info as menuInfo,
+		mf.note as menuNote, mf.create_time as menuCreateTime, mf.timestamp as menuTimestamp
+		from sys_role role left join sys_role_menu rm on role.id=rm.role_id
+		left join sys_menu_function mf on rm.menu_function_id=mf.id
+		where role.id=#{roleId} and mf.menu_url is not null and  LENGTH(trim(mf.menu_url))>=1
+	</select>
+	
+	<!-- query all sys_role -->
+	<select id="findAll" resultMap="SysRoleMap">
+		SELECT
+		<include refid="columns" />
+		FROM sys_role
+	</select>
+	
+	<!-- query user no own sys_role -->
+	<select id="findUserNo" resultMap="SysRoleMap" parameterType="long">
+		SELECT
+		<include refid="columns" />
+		FROM sys_role where id not in (select role_id from sys_user_role where user_session_id=#{userSessionId})
+	</select>
+	
+	<select id="findUserRoles" resultMap="SysRoleMap" parameterType="long">
+		select <include refid="querycolumns" />
+		 from sys_role role left join sys_user_role ur on role.id=ur.role_id 
+		 where ur.user_session_id=#{userSessionId}
+	</select>
+
+	<!-- delete sys_role by primary key -->
+	<delete id="deleteById" parameterType="long">
+		delete FROM sys_role where
+		id=#{id}
+	</delete>
+
+</mapper> 

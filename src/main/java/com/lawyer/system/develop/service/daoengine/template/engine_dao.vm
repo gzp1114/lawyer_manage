@@ -1,0 +1,168 @@
+##常量
+#set($TABLES_NODE="Tables") 
+##
+#set($TABLE_NAME="Code")
+##
+#set($TABLE_FIELD_COLUMN="Code")
+##
+#set($TABLE_COLUMNS="Columns")
+##
+#set($FIELD_DATA_TYPE="DataType")
+##
+##表
+#set($CREATE_TABLE=$tableService.tableNames())
+##
+#set($DAO_PACKAGE_PATH="${tableService.packagePath()}.dao.mybatis")
+##
+##包括函数
+#set($path="daoenginetemplate/")
+##
+##解析body元素(递归)
+#macro ( recursiveBody $childList)
+##
+#foreach ( $child in $childList.getChildren() )
+##
+#foreach ( $childs in $child.getChildren() )
+##
+#foreach ( $childss in $childs.getChildren() )
+##
+#foreach ( $childsss in $childss.getChildren() )
+##
+#if($childsss.getName() == $TABLES_NODE)
+##
+#foreach ( $childssss in $childsss.getChildren() )
+##
+#set($tableName="")
+##
+#foreach ( $childsssss in $childssss.getChildren() )
+##
+#if($childsssss.getName() == $TABLE_NAME)
+##
+#set($tableName=$childsssss.getText())
+##
+#end
+##
+#if($childsssss.getName() == $TABLE_COLUMNS && $tableName == $CREATE_TABLE)
+##
+#table($childsssss,$tableName)
+##
+#stop
+##
+#end
+##
+#end
+##
+#end	
+##
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+#macro ( table $tableNode,$tableName)
+##
+package $DAO_PACKAGE_PATH;
+##导入包
+#importApi()
+##
+
+@MyBatisRepository
+public interface $tableService.tableName($tableName)Mapper {
+#extractFunction($tableNode,$tableName)
+##
+}
+#end
+##
+#macro ( importApi)
+##
+import java.util.List;
+import java.util.Map;
+
+import com.ariadnethread.cores.framework.mybatis.MyBatisRepository;
+import ${tableService.packagePath()}.domain.$tableService.tableName($tableName);
+#end
+##
+#macro ( extractFunction $tableNode,$tableName)
+##
+
+  	/**
+	 * save $tableName
+	 * @param $tableService.tableName($tableName)
+	 * @return 
+	 */
+	 public void save($tableService.tableName($tableName) $tableService.tableField($tableName));
+	
+	/**
+	 * update $tableName
+	 * @param $tableService.tableName($tableName)
+	 * @return 
+	 */
+	 public void update($tableService.tableName($tableName) $tableService.tableField($tableName));
+#set($idField="")
+##
+#set($idFieldType="")
+##
+#foreach ( $Columns in $tableNode.getChildren() )
+##
+#set($id="false")
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == "Identity" )
+##
+#set($id="true")
+##
+#end
+##
+#end
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == $FIELD_DATA_TYPE  && $id == "true")
+##
+#set($idFieldType=$tableService.fieldTypeToJavaType($Columnss.getText()))
+##
+#end
+##
+#if($Columnss.getName() == $TABLE_FIELD_COLUMN && $id == "true" )
+##
+#set($idField=$Columnss.getText())	
+##
+#end
+##
+#end
+##
+#end
+##
+  	/**
+	 * query $tableName by primary key 
+	 * @param $idFieldType $idField
+	 * @return $tableService.tableName($tableName)
+	 */
+	 public $tableService.tableName($tableName) findBy$tableService.tableName($idField)($idFieldType $tableService.tableField($idField));
+	 
+	/**
+	 * 按条件分页查询记录
+	 * @param searchParams 条件
+	 * @return
+	 */
+	 List<$tableService.tableName($tableName)> searchByPage(Map<String,Object> searchParams);
+	 
+	 /**
+	 * delete $tableName by primary key 
+	 * @param $tableService.tableName($tableName)
+	 * @return 
+	 */
+	 public void deleteById($idFieldType $tableService.tableField($idField));
+	 
+#end
+##
+#recursiveBody($root.getRootElement())
+##

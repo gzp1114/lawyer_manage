@@ -1,0 +1,20 @@
+## 修改功能
+#macro ( analysisModify )
+##替换相关功能名称
+
+	/**
+	 * 修改${tableName}
+	 * @param ${tableFieldCode}
+	 * @return Results
+	 */
+	public Results modify(${tableClassCode} ${tableFieldCode}){
+
+		${tableFieldCode}Dao.update(${tableFieldCode});
+		
+		Results results = new Results(
+				UserCenterContents.API_RETURN_STATUS.NORMAL.value(),
+				UserCenterContents.API_RETURN_STATUS.NORMAL.desc());
+		return results; 
+	}
+
+#end

@@ -1,0 +1,96 @@
+## 查询列表脚本
+#macro ( analysisJstable )
+	//构建表
+	jQuery(function($) {
+	
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+			
+			//resize to fit page size
+			$(window).on('resize.jqGrid', function () {
+				$(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width() );
+		    })
+			//resize on sidebar collapse/expand
+			var parent_column = $(grid_selector).closest('[class*="col-"]');
+			$(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
+				if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
+					$(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
+				}
+		    })
+			
+			jQuery(grid_selector).jqGrid({
+				url: "${ctx}/${tableFieldCode}/search",
+				datatype: 'json',
+				mtype: 'post',
+				height: 'auto',
+				width: 'auto',
+				colNames:[${tableRowTitle}'操作'],
+				colModel:[
+					${tableRowField}
+					{name:'operation',  width:80, sortable:false,formatter: function (value, grid, rows, state) { return rowOperation(value, grid, rows, state);  }}
+				], 
+				viewrecords : true,
+				rowNum:10,
+				rowList:[10,20,30],
+				pager : pager_selector,
+				altRows: true,
+				loadComplete : function() {
+					var table = this;
+					setTimeout(function(){
+						updatePagerIcons(table);
+					}, 0);
+				},
+				jsonReader:{
+					"root":"data.rows",
+					"page":"data.page",
+				    "total":"data.total",
+				    "records":"data.records",
+				    "repeatitems": false,
+				    "id":"id"},
+				toolbar: [true,"top"]
+		
+			});
+			
+			$(window).triggerHandler('resize.jqGrid');
+			jQuery(grid_selector).jqGrid('navGrid',pager_selector,{edit:false,add:false,del:false,search:false,refresh:false});
+			
+			$("#t_grid-table").append('   <button id="${tableFieldCode}AddButton" class="btn btn-sm btn-info">'+
+					'<i class="ace-icon fa fa-plus-square bigger-110"></i>'+
+					'<span class="bigger-110 no-text-shadow"  >增加</span>'+
+				'</button>');
+		
+			$("#t_grid-table").append('   <button id="${tableFieldCode}ModifyButton" class="btn btn-sm btn-info">'+
+										'<i class="ace-icon fa fa-pencil-square-o bigger-110"></i>'+
+										'<span class="bigger-110 no-text-shadow">修改</span>'+
+									'</button>');
+			
+			
+			function updatePagerIcons(table) {
+				var replacement = 
+				{
+					'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
+					'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
+					'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
+					'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
+				};
+				$('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+					var icon = $(this);
+					var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+					
+					if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+				})
+			}
+			
+			//override dialog's title function to allow for HTML titles
+			$.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+				_title: function(title) {
+					var $title = this.options.title || '&nbsp;'
+					if( ("title_html" in this.options) && this.options.title_html == true )
+						title.html($title);
+					else title.text($title);
+				}
+			}));
+		});
+		//构建表结束
+
+#end

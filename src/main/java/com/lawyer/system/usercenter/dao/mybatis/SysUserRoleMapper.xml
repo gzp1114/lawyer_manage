@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper
+	namespace="com.lawyer.system.usercenter.dao.mybatis.SysUserRoleMapper">
+
+	<!-- sys_user_role query field -->
+	<sql id="columns">
+
+		id,
+
+		tenant_id,
+
+		user_session_id,
+
+		role_id,
+
+		note,
+
+		create_time,
+
+		timestamp
+	</sql>
+
+	<!-- sys_user_role result map -->
+	<resultMap type="SysUserRole" id="SysUserRoleMap">
+
+		<id column="id" property="id" />
+
+		<result column="tenant_id" property="tenantId" />
+
+		<result column="user_session_id" property="userSessionId" />
+
+		<result column="role_id" property="roleId" />
+
+		<result column="note" property="note" />
+
+		<result column="create_time" property="createTime" />
+
+		<result column="timestamp" property="timestamp" />
+	</resultMap>
+
+	<!-- save sys_user_role -->
+	<insert id="save" parameterType="SysUserRole">
+		insert into sys_user_role (
+		<include refid="columns" />
+		)
+		values (
+
+		#{id},
+
+		#{tenantId},
+
+		#{userSessionId},
+
+		#{roleId},
+
+		#{note},
+
+		#{createTime},
+
+		#{timestamp}
+		)
+	</insert>
+	
+	<insert id="saveMore" parameterType="List">
+		insert into sys_user_role (
+		<include refid="columns" />
+		)
+		values 
+		
+		<foreach collection="list" item="item" index="index" separator="," >  
+        	(#{item.id},#{item.tenantId},#{item.userSessionId},#{item.roleId},#{item.note},#{item.createTime},#{item.timestamp})  
+    	</foreach>
+	</insert>
+
+	<!-- update sys_user_role -->
+	<update id="update" parameterType="SysUserRole">
+		UPDATE sys_user_role
+		<set>
+			<if test="tenantId != null">tenant_id = #{tenantId}, </if>
+
+			<if test="userSessionId != null">user_session_id = #{userSessionId}, </if>
+
+			<if test="roleId != null">role_id = #{roleId}, </if>
+
+			<if test="note != null">note = #{note}, </if>
+
+			<if test="createTime != null">create_time = #{createTime}, </if>
+
+			<if test="timestamp != null">timestamp = #{timestamp}, </if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<!-- query sys_user_role by primary key -->
+	<select id="findById" resultMap="SysUserRoleMap" parameterType="Long">
+		SELECT
+		<include refid="columns" />
+		FROM sys_user_role where id=#{id}
+	</select>
+	<select id="findByUserId" resultMap="SysUserRoleMap" parameterType="Long">
+		SELECT
+		<include refid="columns" />
+		FROM sys_user_role where user_session_id=#{userSessionId}
+	</select>
+
+	<!-- delete sys_user_role by primary key -->
+	<delete id="deleteById" parameterType="Long">
+		delete FROM sys_user_role
+		where id=#{id}
+	</delete>
+	
+	<delete id="deleteByUser" parameterType="Long">
+		delete FROM sys_user_role
+		where user_session_id=#{userSessionId}
+	</delete>
+	
+	<delete id="deleteByRole" parameterType="Long">
+		delete FROM sys_user_role
+		where role_id=#{roleId}
+	</delete>
+
+</mapper> 

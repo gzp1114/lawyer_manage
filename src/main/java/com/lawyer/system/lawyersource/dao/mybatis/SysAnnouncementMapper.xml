@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper namespace="com.lawyer.system.lawyersource.dao.mybatis.SysAnnouncementMapper">
+	<!-- sys_announcement query field-->
+	<sql id="columns">
+      id,
+      debtor_company_id,
+      announcement_court,
+      announcement_date,
+      published_page,
+      note,
+      url,
+      createtime,
+      operator_id
+	</sql>
+	
+	<!-- sys_announcement result map-->
+  <resultMap type="SysAnnouncement" id="SysAnnouncementMap">
+		<id column="id" property="id"/>
+    	<result column="debtor_company_id" property="debtorCompanyId"/>
+    	<result column="announcement_court" property="announcementCourt"/>
+    	<result column="announcement_date" property="announcementDate"/>
+    	<result column="published_page" property="publishedPage"/>
+    	<result column="note" property="note"/>
+    	<result column="url" property="url"/>
+    	<result column="createtime" property="createtime"/>
+    	<result column="operator_id" property="operatorId"/>
+  </resultMap>
+  
+  <!-- save sys_announcement -->
+  <insert id="save" parameterType="SysAnnouncement" >
+		insert into sys_announcement (
+		<include refid="columns"/>)
+			values (
+				#{id},
+				#{debtorCompanyId},
+				#{announcementCourt},
+				#{announcementDate},
+				#{publishedPage},
+				#{note},
+				#{url},
+				#{createtime},
+				#{operatorId}
+			)
+	</insert>
+	
+	<!-- update sys_announcement -->
+	<update id="update" parameterType="SysAnnouncement">
+	    UPDATE sys_announcement 
+	    <set>
+			<if test="debtorCompanyId != null">debtor_company_id = #{debtorCompanyId}, </if>
+			<if test="announcementCourt != null">announcement_court = #{announcementCourt}, </if>
+			<if test="announcementDate != null">announcement_date = #{announcementDate}, </if>
+			<if test="publishedPage != null">published_page = #{publishedPage}, </if>
+			<if test="note != null">note = #{note}, </if>
+			<if test="url != null">url = #{url}, </if>
+			<if test="createtime != null">createtime = #{createtime}, </if>
+			<if test="operatorId != null">operator_id = #{operatorId}, </if>
+	    </set>
+	    WHERE id = #{id}
+  </update>
+  
+  <!-- 分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="SysAnnouncementMap">
+		SELECT <include refid="columns" /> FROM sys_announcement
+			<where>
+				<if test="id != null and id !=''"> id = #{id} </if>
+				<if test="debtorCompanyId != null and debtorCompanyId !=''"> and debtor_company_id = #{debtorCompanyId} </if>
+				<if test="announcementCourt != null and announcementCourt !=''"> and announcement_court = #{announcementCourt} </if>
+				<if test="announcementDate != null and announcementDate !=''"> and announcement_date = #{announcementDate} </if>
+				<if test="publishedPage != null and publishedPage !=''"> and published_page = #{publishedPage} </if>
+				<if test="note != null and note !=''"> and note = #{note} </if>
+				<if test="url != null and url !=''"> and url = #{url} </if>
+				<if test="createtime != null and createtime !=''"> and createtime = #{createtime} </if>
+				<if test="operatorId != null and operatorId !=''"> and operator_id = #{operatorId} </if>
+			</where>
+	</select>
+  
+  <!-- query sys_announcement by primary key -->
+  <select id="findById"  resultMap="SysAnnouncementMap" parameterType="Long">
+		SELECT <include refid="columns"/>  FROM sys_announcement where id=#{id}
+	</select>
+	
+	<select id="findByCompanyid"  resultMap="SysAnnouncementMap" parameterType="Long">
+		SELECT <include refid="columns"/>  FROM sys_announcement where debtor_company_id=#{debtorCompanyId}
+	</select>
+	
+	
+	
+	<!-- delete sys_announcement by primary key -->
+  <delete id="deleteById"  parameterType="Long">
+		delete FROM sys_announcement where id=#{id}
+  </delete>
+</mapper> 

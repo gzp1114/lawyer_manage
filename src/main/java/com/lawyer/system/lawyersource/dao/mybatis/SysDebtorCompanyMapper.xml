@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper namespace="com.lawyer.system.lawyersource.dao.mybatis.SysDebtorCompanyMapper">
+	<!-- sys_debtor_company query field-->
+	<sql id="columns">
+      id,
+      name,
+      organization_code,
+      register_number,
+      type,
+      corporate_name,
+      corporate_cardnum,
+      establish_date,
+      register_capital,
+      business_start_date,
+      business_end_date,
+      registration_authority,
+      address,
+      operate_status,
+      create_time,
+      note,
+      operator_id
+	</sql>
+	
+	<!-- sys_debtor_company result map-->
+  <resultMap type="SysDebtorCompany" id="SysDebtorCompanyMap">
+    	<result column="id" property="id"/>
+    	<result column="name" property="name"/>
+    	<result column="organization_code" property="organizationCode"/>
+    	<result column="register_number" property="registerNumber"/>
+    	<result column="type" property="type"/>
+    	<result column="corporate_name" property="corporateName"/>
+    	<result column="corporate_cardnum" property="corporateCardnum"/>
+    	<result column="establish_date" property="establishDate"/>
+    	<result column="register_capital" property="registerCapital"/>
+    	<result column="business_start_date" property="businessStartDate"/>
+    	<result column="business_end_date" property="businessEndDate"/>
+    	<result column="registration_authority" property="registrationAuthority"/>
+    	<result column="address" property="address"/>
+    	<result column="operate_status" property="operateStatus"/>
+    	<result column="create_time" property="createTime"/>
+    	<result column="note" property="note"/>
+    	<result column="operator_id" property="operatorId"/>
+  </resultMap>
+  
+  <!-- save sys_debtor_company -->
+  <insert id="save" parameterType="SysDebtorCompany" >
+  		<selectKey resultType="long" order="AFTER" keyProperty="id"> 
+			SELECT LAST_INSERT_ID() AS id 
+		</selectKey>
+  
+		insert into sys_debtor_company (
+		<include refid="columns"/>)
+			values (
+				#{id},
+				#{name},
+				#{organizationCode},
+				#{registerNumber},
+				#{type},
+				#{corporateName},
+				#{corporateCardnum},
+				#{establishDate},
+				#{registerCapital},
+				#{businessStartDate},
+				#{businessEndDate},
+				#{registrationAuthority},
+				#{address},
+				#{operateStatus},
+				#{createTime},
+				#{note},
+				#{operatorId}
+			)
+	</insert>
+	
+	<!-- update sys_debtor_company -->
+	<update id="update" parameterType="SysDebtorCompany">
+	    UPDATE sys_debtor_company 
+	    <set>
+			<if test="id != null">id = #{id}, </if>
+			<if test="name != null">name = #{name}, </if>
+			<if test="organizationCode != null">organization_code = #{organizationCode}, </if>
+			<if test="registerNumber != null">register_number = #{registerNumber}, </if>
+			<if test="type != null">type = #{type}, </if>
+			<if test="corporateName != null">corporate_name = #{corporateName}, </if>
+			<if test="corporateCardnum != null">corporate_cardnum = #{corporateCardnum}, </if>
+			<if test="establishDate != null">establish_date = #{establishDate}, </if>
+			<if test="registerCapital != null">register_capital = #{registerCapital}, </if>
+			<if test="businessStartDate != null">business_start_date = #{businessStartDate}, </if>
+			<if test="businessEndDate != null">business_end_date = #{businessEndDate}, </if>
+			<if test="registrationAuthority != null">registration_authority = #{registrationAuthority}, </if>
+			<if test="address != null">address = #{address}, </if>
+			<if test="operateStatus != null">operate_status = #{operateStatus}, </if>
+			<if test="createTime != null">create_time = #{createTime}, </if>
+			<if test="note != null">note = #{note}, </if>
+			<if test="operatorId != null">operator_id = #{operatorId}, </if>
+	    </set>
+	    WHERE  = #{}
+  </update>
+  
+  <!-- 分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="SysDebtorCompanyMap">
+		SELECT <include refid="columns" /> FROM sys_debtor_company
+			<where>
+				<if test="id != null and id !=''"> and id = #{id} </if>
+				<if test="name != null and name !=''"> and name like CONCAT('%','${name}','%' ) </if>
+				<if test="organizationCode != null and organizationCode !=''"> and organization_code = #{organizationCode} </if>
+				<if test="registerNumber != null and registerNumber !=''"> and register_number = #{registerNumber} </if>
+				<if test="type != null and type !=''"> and type = #{type} </if>
+				<if test="corporateName != null and corporateName !=''"> and corporate_name = #{corporateName} </if>
+				<if test="corporateCardnum != null and corporateCardnum !=''"> and corporate_cardnum = #{corporateCardnum} </if>
+				<if test="establishDate != null and establishDate !=''"> and establish_date = #{establishDate} </if>
+				<if test="registerCapital != null and registerCapital !=''"> and register_capital = #{registerCapital} </if>
+				<if test="businessStartDate != null and businessStartDate !=''"> and business_start_date = #{businessStartDate} </if>
+				<if test="businessEndDate != null and businessEndDate !=''"> and business_end_date = #{businessEndDate} </if>
+				<if test="registrationAuthority != null and registrationAuthority !=''"> and registration_authority = #{registrationAuthority} </if>
+				<if test="address != null and address !=''"> and address = #{address} </if>
+				<if test="operateStatus != null and operateStatus !=''"> and operate_status = #{operateStatus} </if>
+				<if test="createTime != null and createTime !=''"> and create_time = #{createTime} </if>
+				<if test="operatorId != null and operatorId !=''"> and operator_id = #{operatorId} </if>
+			</where>
+	</select>
+  
+  <!-- query sys_debtor_company by primary key -->
+  <select id="findById"  resultMap="SysDebtorCompanyMap" parameterType="long">
+		SELECT <include refid="columns"/>  FROM sys_debtor_company where id=#{id}
+	</select>
+	
+	<!-- 根据名称获取公司信息 -->
+	<select id="findByName"  resultMap="SysDebtorCompanyMap" parameterType="String">
+		SELECT <include refid="columns"/>  FROM sys_debtor_company where name=#{name}
+	</select>
+	
+	<!-- delete sys_debtor_company by primary key -->
+  <delete id="deleteById"  parameterType="long">
+		delete FROM sys_debtor_company where id=#{id}
+  </delete>
+</mapper> 

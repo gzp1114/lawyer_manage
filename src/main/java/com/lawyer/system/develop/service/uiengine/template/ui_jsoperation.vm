@@ -1,0 +1,184 @@
+## 查询列表脚本
+#macro ( analysisJsoperation )
+	//查询按键操作事件
+	$( "#${tableFieldCode}Search" ).on('click', function(e) {
+		
+		return search();
+		
+	});
+	
+	//查询${tableName}
+	function search(){
+		
+		$("#grid-table").jqGrid('setGridParam',{
+        	postData:${searchPostData},
+    	}).trigger('reloadGrid'); 
+		
+		return false;
+	}
+	
+	//数据行操作功能
+	function rowOperation(value, grid, curRow, state){
+		var opeStr = "<div title=\"编辑所选记录\" style=\"float:left;cursor:pointer;\" class=\"ui-pg-div ui-inline-edit\" id=\"jEditButton_1\" onclick=\"${tableFieldCode}ModifyRow("+curRow.id+");\" onmouseover=\"jQuery(this).addClass('ui-state-hover');\" onmouseout=\"jQuery(this).removeClass('ui-state-hover');\"><span class=\"ui-icon ui-icon-pencil\"></span></div>"+
+		"<div title=\"删除所选记录\" style=\"float:left;margin-left:5px;\" class=\"ui-pg-div ui-inline-del\" id=\"jDeleteButton_1\" onclick=\"${tableFieldCode}DeleteRow("+curRow.id+");\" onmouseover=\"jQuery(this).addClass('ui-state-hover');\" onmouseout=\"jQuery(this).removeClass('ui-state-hover');\"><span class=\"ui-icon ui-icon-trash\"></span></div>";
+		
+		return opeStr;
+	}
+	
+	//增加${tableName}
+	$( "#${tableFieldCode}AddButton" ).on('click', function(e) {
+		
+		var dialog = $('<div></div>').dialog({
+			closed:false,
+            cache:false,
+			modal:true,
+			title:"<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-plus-square'></i> 新增${tableName}</h4></div>",
+			title_html:true,
+			buttons:[ 
+					{
+						html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 提交",
+						"class" : "btn btn-info btn-xs",
+						click: function() {
+							
+							${tableFieldCode}Add(); 
+							
+							$( this ).dialog( "close" );
+							
+							return search();
+								
+						}
+					}
+					,
+					{
+						html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+						"class" : "btn btn-xs",
+						click: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+			],
+			create: function( event, ui ) {$(this).load("<c:url value='/${tableFieldCode}/toAdd'/>");},
+			close:function() {
+                $(this).dialog("destroy");
+            }
+		});
+	});
+	
+	//删除${tableName}
+	function ${tableFieldCode}DeleteRow(rowId){
+		
+		$('<div></div>').dialog({
+			resizable: false,
+			modal: true,
+			title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> 删除${tableName}</h4></div>",
+			title_html: true,
+			buttons: [
+				{
+					html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; 删除",
+					"class" : "btn btn-danger btn-xs",
+					click: function() {
+						
+						deleteRowById(rowId);
+						
+						$( this ).dialog( "close" );
+						
+						return search();
+					}
+				}
+				,
+				{
+					html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+					"class" : "btn btn-xs",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			]
+		}).append("确定删除当前${tableName}吗？");
+	}
+	
+	//删除${tableName}操作
+	function deleteRowById(rowId){
+		$.ajax({
+	        type: "DELETE",
+	        dataType: "json",
+	        async: false,
+	        url: '${ctx}/${tableFieldCode}/delete/'+rowId,
+	        success: function (data) {
+	        	if(data.status!='0'){
+	        		alert(data.error);
+	        	}
+	        },
+	        error: function(data) {
+	            alert("error:"+data.error);
+	         }
+	    });
+	}
+
+	//${tableName}修改按钮操作
+	$( "#${tableFieldCode}ModifyButton" ).on('click', function(e) {
+		var id=$("#grid-table").jqGrid('getGridParam','selrow');
+		${tableFieldCode}ModifyRow(id);
+	});
+	
+	//修改${tableName}
+	function ${tableFieldCode}ModifyRow(id){
+		
+		if(id == null){
+			messagePrompt('请选择需要修改记录！');
+			return false;
+		}
+		var dialog = $('<div></div>').dialog({
+			closed:false,
+            cache:false,
+			modal:true,
+			title:"<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-pencil-square-o'></i> 修改${tableName}</h4></div>",
+			title_html:true,
+			buttons:[ 
+					{
+						html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 提交",
+						"class" : "btn btn-info btn-xs",
+						click: function() {
+							
+							${tableFieldCode}Modify(); 
+							
+							$( this ).dialog( "close" );
+							
+							return search();
+								
+						}
+					}
+					,
+					{
+						html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+						"class" : "btn btn-xs",
+						click: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+			],
+			create: function( event, ui ) {$(this).load("<c:url value='/${tableFieldCode}/toModify/"+id+"'/>");},
+			close:function() {
+                $(this).dialog("destroy");
+            }
+		});
+	}
+	
+	//消息提示
+	function messagePrompt(message){
+			bootbox.dialog({
+				message: "<span class='bigger-110'>"+message+"</span>",
+				buttons: 			
+				{
+					"click" :
+					{
+						"label" : "确认",
+						"className" : "btn-sm btn-primary",
+						"callback": function() {
+						}
+					}
+				}
+			});
+	}
+
+#end

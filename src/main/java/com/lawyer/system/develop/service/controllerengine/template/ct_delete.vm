@@ -1,0 +1,21 @@
+## 删除功能
+#macro ( analysisDelete )
+##替换相关功能名称
+
+	/**
+	 * <p>删除${tableName}</p>
+	 * 
+	 */
+	@RequiresPermissions("${tableFieldCode}:delete")
+	@RequestMappingName(value = "删除${tableName}")
+	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public Results delete(@PathVariable("id")Long id,HttpServletRequest request) {
+		
+		Results results = ${tableFieldCode}Service.deleteById(id);
+		
+		logger.info(new JacksonUtil().getJson(results));
+		return results;
+	}
+
+#end

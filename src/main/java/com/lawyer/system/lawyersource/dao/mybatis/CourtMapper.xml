@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper namespace="com.lawyer.system.lawyersource.dao.mybatis.CourtMapper">
+	<!-- sys_debtor query field-->
+	<sql id="columns">
+      ID,
+      pname,
+      partyCardNum,
+      caseId,
+      execCourtName,
+      courtcode,
+      caseCreateTime,
+      casecode,
+      execMoney,
+      caseState
+	</sql>
+	
+	<!-- sys_debtor result map-->
+  <resultMap type="Court" id="CourtMap">
+		<id column="ID" property="id"/>
+    	<result column="pname" property="pname"/>
+    	<result column="partyCardNum" property="partyCardNum"/>
+    	<result column="caseId" property="caseId"/>
+    	<result column="execCourtname" property="execCourtname"/>
+    	<result column="courtcode" property="courtcode"/>
+    	<result column="caseCreatetime" property="caseCreatetime"/>
+    	<result column="casecode" property="casecode"/>
+    	<result column="executeMoney" property="executeMoney"/>
+    	<result column="caseState" property="caseState"/>
+  </resultMap>
+  
+  <!-- query sys_debtor by primary key -->
+  <select id="findById"  resultMap="CourtMap" parameterType="Long">
+		SELECT <include refid="columns"/>  FROM court where id=#{id}
+	</select>
+	
+	<select id="findByCount"  resultMap="CourtMap" parameterType="Long">
+		SELECT <include refid="columns"/>  FROM court limit 0,#{count}
+	</select>
+	
+	<!-- delete sys_debtor by primary key -->
+  <delete id="deleteById"  parameterType="Long">
+		delete FROM court where id=#{id}
+  </delete>
+  
+  <delete id="deleteByCount"  parameterType="Long">
+		delete FROM court limit #{count}
+  </delete>
+  	
+</mapper> 

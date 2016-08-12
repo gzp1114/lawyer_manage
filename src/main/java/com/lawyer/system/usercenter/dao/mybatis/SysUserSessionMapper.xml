@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper
+	namespace="com.lawyer.system.usercenter.dao.mybatis.SysUserSessionMapper">
+
+	<sql id="columns">
+      id,
+      login_account,
+      login_password,
+      username,
+      phone,
+      status,
+      session_id,
+      last_login_time,
+      login_ip,
+      note,
+      create_time,
+      timestamp
+	</sql>
+	
+	<!-- sys_user_session query field -->
+	<sql id="searchcolumns">
+
+		session.id,
+
+		session.username,
+
+		session.phone,
+
+		session.login_account,
+
+		session.login_password,
+
+		session.status,
+		
+		session.session_id,
+
+		session.last_login_time,
+
+		session.login_times,
+
+		session.login_ip,
+
+		session.note,
+
+		session.create_time,
+
+		session.timestamp
+	</sql>
+
+	<!-- sys_user_session result map -->
+	<resultMap type="SysUserSession" id="SysUserSessionMap">
+
+		<result column="id" property="id" />
+
+		<result column="username" property="username" />
+
+		<result column="phone" property="phone" />
+
+		<result column="login_account" property="loginAccount" />
+
+		<result column="login_password" property="loginPassword" />
+
+		<result column="status" property="status" />
+		
+		<result column="session_id" property="sessionId" />
+
+		<result column="last_login_time" property="lastLoginTime" />
+
+		<result column="login_ip" property="loginIp" />
+
+		<result column="note" property="note" />
+
+		<result column="create_time" property="createTime" />
+
+		<result column="timestamp" property="timestamp" />
+	</resultMap>
+	
+	<resultMap type="SysUserSession" id="userRoleMap" extends="SysUserSessionMap">  
+        <collection property="roleList" ofType="SysRole">  
+            <result column="roleId" property="id" />
+
+			<result column="parentId" property="parentId" />
+	
+			<result column="roleTenantId" property="tenantId" />
+	
+			<result column="roleName" property="roleName" />
+	
+			<result column="roleNote" property="note" />
+	
+			<result column="roleCreateTime" property="createTime" />
+	
+			<result column="roleTimestamp" property="timestamp" />  
+        </collection>  
+    </resultMap>
+
+	<!-- save sys_user_session -->
+	<insert id="save" parameterType="SysUserSession">
+		<selectKey resultType="long" order="AFTER" keyProperty="id"> 
+			SELECT LAST_INSERT_ID() AS id 
+		</selectKey> 
+		
+		insert into sys_user_session (
+		<include refid="columns" />
+		)
+		values (
+
+		#{id},
+
+		#{loginAccount},
+
+		#{loginPassword},
+		
+		#{username},
+
+		#{phone},
+
+		#{status},
+		
+		#{sessionId},
+
+		#{lastLoginTime},
+
+		#{loginIp},
+
+		#{note},
+
+		#{createTime},
+
+		#{timestamp}
+		)
+	</insert>
+
+	<!-- update sys_user_session -->
+	<update id="update" parameterType="SysUserSession">
+		UPDATE sys_user_session
+		<set>
+
+			<if test="id != null">id = #{id}, </if>
+
+			<if test="username != null">username = #{username}, </if>
+
+			<if test="phone != null">phone = #{phone}, </if>
+
+			<if test="loginAccount != null">login_account = #{loginAccount}, </if>
+
+			<if test="loginPassword != null">login_password = #{loginPassword}, </if>
+
+			<if test="status != null">status = #{status}, </if>
+			
+			<if test="sessionId != null">session_id = #{sessionId}, </if>
+
+			<if test="lastLoginTime != null">last_login_time = #{lastLoginTime}, </if>
+
+			<if test="loginIp != null">login_ip = #{loginIp}, </if>
+
+			<if test="note != null">note = #{note}, </if>
+
+			<if test="createTime != null">create_time = #{createTime}, </if>
+
+			<if test="timestamp != null">timestamp = #{timestamp}, </if>
+		</set>
+		WHERE id=#{id}
+	</update>
+	
+	<!-- 分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="SysUserSessionMap">
+		SELECT <include refid="columns" /> FROM sys_user_session
+			<where>
+				<if test="id != null and id != ''">
+					id = #{id}
+				</if>
+				<if test="loginAccount != null and loginAccount != ''">
+					and login_account = #{loginAccount}
+				</if>
+				<if test="status != null">
+					and status = #{status}
+				</if>
+				<if test="username != null and username != ''">
+					and username like CONCAT('%','${username}','%' )
+				</if>
+				<if test="phone != null and phone != ''">
+					and phone = #{phone}
+				</if>
+			</where>
+	</select>
+
+	<!-- query sys_user_session by primary key -->
+	<select id="findById" resultMap="SysUserSessionMap" parameterType="long">
+		SELECT
+		<include refid="columns" />
+		FROM sys_user_session where id=#{id}
+	</select>
+	<select id="findByLoginAccount" resultMap="SysUserSessionMap" parameterType="string">
+		SELECT 
+		<include refid="searchcolumns" />
+		FROM sys_user_session session 
+		where login_account=#{loginAccount,jdbcType=VARCHAR} and status=1
+	</select>
+	
+	<select id="selectUserRoles" resultMap="userRoleMap" parameterType="string">
+		SELECT <include refid="searchcolumns" />,role.id as roleId,role.parent_id as parentId,role.tenant_id as roleTenantId,role.role_name as roleName,
+		role.note as roleNote,role.create_time as roleCreateTime,role.timestamp as roleTimestamp
+		FROM sys_user_session session left join sys_user_role ur on session.id=ur.user_session_id
+		left join sys_role role on ur.role_id=role.id
+		where session.login_account=#{loginAccount,jdbcType=VARCHAR}
+	</select>
+
+	<!-- delete sys_user_session by primary key -->
+	<delete id="deleteBy" parameterType="long">
+		delete FROM sys_user_session
+		where id=#{id}
+	</delete>
+	
+	 
+	  
+	  
+</mapper> 

@@ -1,0 +1,20 @@
+## 删除功能
+#macro ( analysisDelete )
+##替换相关功能名称
+
+	/**
+	 * 删除${tableName}
+	 * @param Long id
+	 * @return Results
+	 */
+	public Results deleteById(Long id){
+
+		${tableFieldCode}Dao.deleteById(id);
+		
+		Results results = new Results(
+				UserCenterContents.API_RETURN_STATUS.NORMAL.value(),
+				UserCenterContents.API_RETURN_STATUS.NORMAL.desc());
+		return results; 
+	}
+
+#end

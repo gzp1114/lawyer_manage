@@ -1,0 +1,278 @@
+##常量
+#set($TABLES_NODE="Tables") 
+##
+#set($TABLE_NAME="Code")
+##
+#set($TABLE_FIELD_COLUMN="Code")
+##
+#set($TABLE_COLUMNS="Columns")
+##
+#set($FIELD_DATA_TYPE="DataType")
+##
+##表
+#set($CREATE_TABLE=$tableService.tableNames())
+##
+#set($DAO_PATH="${tableService.packagePath()}.dao.mybatis.$tableService.tableNamess()Mapper")
+##
+##包括函数
+#set($path="daoenginetemplate/")
+##
+##解析body元素(递归)
+#macro ( recursiveBody $childList)
+##
+#foreach ( $child in $childList.getChildren() )
+##
+#foreach ( $childs in $child.getChildren() )
+##
+#foreach ( $childss in $childs.getChildren() )
+##
+#foreach ( $childsss in $childss.getChildren() )
+##
+#if($childsss.getName() == $TABLES_NODE)
+##
+#foreach ( $childssss in $childsss.getChildren() )
+##
+#set($tableName="")
+##
+#foreach ( $childsssss in $childssss.getChildren() )
+##
+#if($childsssss.getName() == $TABLE_NAME)
+##
+#set($tableName=$childsssss.getText())
+##
+#end
+##
+#if($childsssss.getName() == $TABLE_COLUMNS  && $tableName == $CREATE_TABLE)
+##
+#table($childsssss,$tableName)
+##
+#end
+##
+#end
+##
+#end	
+##
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+#macro ( table $tableNode,$tableName)
+##
+	<!-- $tableName query field-->
+	<sql id="columns">
+#set($columnSize=$tableNode.getChildren().size())
+##
+#set($forColumns=0)
+##
+#foreach ( $Columns in $tableNode.getChildren() )
+##
+##$Columns.getName()
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == $TABLE_FIELD_COLUMN)
+##
+#set($forColumns = $forColumns+1)
+##
+#if($forColumns < $columnSize)
+##
+      $Columnss.getText(),
+#else
+##
+      $Columnss.getText()
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+	</sql>
+	
+	<!-- $tableName result map-->
+  <resultMap type="$tableService.tableName($tableName)" id="$tableService.tableName($tableName)Map">
+#foreach ( $Columns in $tableNode.getChildren() )
+##
+#set($id="false")
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == "Identity" )
+##
+#set($id="true")
+##
+#end
+##
+#end
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == $TABLE_FIELD_COLUMN && $id == "true" )
+##
+		<id column="$Columnss.getText()" property="$tableService.tableField($Columnss.getText())"/>
+#elseif($Columnss.getName() == $TABLE_FIELD_COLUMN)
+##
+    	<result column="$Columnss.getText()" property="$tableService.tableField($Columnss.getText())"/>
+#end
+##
+#end
+##
+#set($id="false")
+##
+#end
+##
+  </resultMap>
+  
+  <!-- save $tableName -->
+  <insert id="save" parameterType="$tableService.tableName($tableName)" >
+		insert into $tableName (
+		<include refid="columns"/>)
+			values (
+#set($columnSize=$tableNode.getChildren().size())
+##
+#set($forColumns=0)
+##
+#foreach ( $Columns in $tableNode.getChildren() )
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == $TABLE_FIELD_COLUMN)
+##
+#set($forColumns = $forColumns+1)
+##
+#if($forColumns < $columnSize)
+##
+				#{$tableService.tableField($Columnss.getText())},
+##
+#else
+##
+				#{$tableService.tableField($Columnss.getText())}
+##
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+			)
+	</insert>
+	
+#set($idField="")
+##
+#set($idFieldType="")
+##
+	<!-- update $tableName -->
+	<update id="update" parameterType="$tableService.tableName($tableName)">
+	    UPDATE $tableName 
+	    <set>
+#foreach ( $Columns in $tableNode.getChildren() )
+##
+#set($id="false")
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == "Identity" )
+##
+#set($id="true")
+##
+#end
+##
+#end
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == $FIELD_DATA_TYPE  && $id == "true")
+##
+#set($idFieldType=$tableService.fieldTypeToJavaType($Columnss.getText()))
+##
+#end
+##
+#if($Columnss.getName() == $TABLE_FIELD_COLUMN && $id == "true" )
+##
+#set($idField=$Columnss.getText())	
+##
+#elseif($Columnss.getName() == $TABLE_FIELD_COLUMN)
+##
+			<if test="$tableService.tableField($Columnss.getText()) != null">$Columnss.getText() = #{$tableService.tableField($Columnss.getText())}, </if>
+#end
+##
+#end
+##
+#end
+##
+	    </set>
+	    WHERE $idField = #{$tableService.tableField($idField)}
+  </update>
+  
+  <!-- 分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="$tableService.tableName($tableName)Map">
+		SELECT <include refid="columns" /> FROM $tableName
+			<where>
+#foreach ( $Columns in $tableNode.getChildren() )
+##
+#set($id="false")
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == "Identity" )
+##
+#set($id="true")
+##
+#end
+##
+#end
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == $FIELD_DATA_TYPE  && $id == "true")
+##
+#set($idFieldType=$tableService.fieldTypeToJavaType($Columnss.getText()))
+##
+#end
+##
+#if($Columnss.getName() == $TABLE_FIELD_COLUMN && $id == "true" )
+##
+#set($idField=$Columnss.getText())	
+				<if test="$tableService.tableField($Columnss.getText()) != null and $tableService.tableField($Columnss.getText()) !=''"> $Columnss.getText() = #{$tableService.tableField($Columnss.getText())} </if>
+##
+#elseif($Columnss.getName() == $TABLE_FIELD_COLUMN)
+##
+				<if test="$tableService.tableField($Columnss.getText()) != null and $tableService.tableField($Columnss.getText()) !=''"> and $Columnss.getText() = #{$tableService.tableField($Columnss.getText())} </if>
+#end
+##
+#end
+##
+#end
+##
+			</where>
+	</select>
+  
+  <!-- query $tableName by primary key -->
+  <select id="findBy$tableService.tableName($idField)"  resultMap="$tableService.tableName($tableName)Map" parameterType="$idFieldType">
+		SELECT <include refid="columns"/>  FROM $tableName where $idField=#{$tableService.tableField($idField)}
+	</select>
+	
+	<!-- delete $tableName by primary key -->
+  <delete id="deleteBy$tableService.tableName($idField)"  parameterType="$idFieldType">
+		delete FROM $tableName where $idField=#{$tableService.tableField($idField)}
+  </delete>
+#end
+##
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper namespace="$DAO_PATH">
+#recursiveBody($root.getRootElement())
+##
+</mapper> 

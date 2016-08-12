@@ -1,0 +1,20 @@
+## 导入包
+#macro ( analysisImport )
+##替换相关功能名称
+package ${packagePath}.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ariadnethread.cores.framework.mybatis.PageParameter;
+import com.ariadnethread.cores.result.Results;
+import ${packagePath}.dao.mybatis.${tableClassCode}Mapper;
+import ${packagePath}.domain.${tableClassCode};
+
+#end

@@ -1,0 +1,58 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"  
+    version="2.0">  
+    <tlib-version>2.0</tlib-version>  
+      
+    <short-name>mydictag</short-name>  
+    <uri>/dictionaryTag</uri> 
+    
+	<tag>  
+	    <description>  
+	        data dictionary convert. 
+	    </description>  
+	    <name>dictag</name>  
+	    <tag-class>com.lawyer.system.utils.taglib.DictionaryTag</tag-class>  
+	    <body-content>scriptless</body-content>  
+	    <attribute>  
+	        <description>  
+	            data dictionary value.
+	        </description>  
+	        <name>value</name>  
+	        <required>true</required>  
+	        <rtexprvalue>true</rtexprvalue>  
+	    </attribute>
+	    <attribute>  
+	        <description>  
+	            data dictionary type.
+	        </description>  
+	        <name>type</name>  
+	        <required>true</required>  
+	        <rtexprvalue>true</rtexprvalue>  
+	    </attribute>    
+	  </tag> 
+	  
+	  <tag>  
+	    <description>  
+	        data dictionary convert. 
+	    </description>  
+	    <name>saledictag</name>  
+	    <tag-class>com.ariadnethread.sale.utils.taglib.DictionaryTag</tag-class>  
+	    <body-content>scriptless</body-content>  
+	    <attribute>  
+	        <description>  
+	            data dictionary value.
+	        </description>  
+	        <name>value</name>  
+	        <required>true</required>  
+	        <rtexprvalue>true</rtexprvalue>  
+	    </attribute>
+	    <attribute>  
+	        <description>  
+	            data dictionary type.
+	        </description>  
+	        <name>type</name>  
+	        <required>true</required>  
+	        <rtexprvalue>true</rtexprvalue>  
+	    </attribute>    
+	  </tag> 
+</taglib> 

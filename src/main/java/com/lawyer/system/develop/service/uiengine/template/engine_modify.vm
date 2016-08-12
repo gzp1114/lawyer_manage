@@ -1,0 +1,50 @@
+##设值
+#set($tableName="${uiElementKit.getTableName()}")
+#set($tableFieldCode="${uiElementKit.getTableFieldCode()}")
+##初始调用文档解析
+#document()
+##
+##dom文档模型
+#macro (document)
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ include file="/static/common/default.jsp"%>
+	
+	<form class="form-horizontal"  id="${tableFieldCode}ModifyForm"  name="${tableFieldCode}ModifyForm" >
+		<input type="hidden" id="id" name="id" value="#[[${]]#${tableFieldCode}#[[.id}]]#">
+#foreach ( $list in $uiElementKit.getFieldList() )
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> $list.getName() </label>
+
+			<div class="col-sm-9">
+				<input id="$list.getCode()" name="$list.getCode()" class="form-control" type="text" value="#[[${]]#${tableFieldCode}.$list.getCode()#[[}]]#">
+			</div>
+		</div>
+#end
+
+	</form>
+	
+	<script type="text/javascript">
+	
+		//修改${tableName}
+		function ${tableFieldCode}Modify(){
+			
+			$.ajax({
+		        type: "POST",
+		        dataType: "json",
+		        async: false,
+		        url: '${ctx}/${tableFieldCode}/modify',
+		        data: $('#${tableFieldCode}ModifyForm').serialize(),
+		        success: function (data) {
+		        	if(data.status!='0'){
+		        		alert(data.error);
+		        	}
+		        },
+		        error: function(data) {
+		            alert("error:"+data.error);
+		         }
+		    });
+			
+		}
+	</script>
+	
+#end

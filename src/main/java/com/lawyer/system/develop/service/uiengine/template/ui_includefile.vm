@@ -1,0 +1,26 @@
+## 页面包含文件（js and css ）
+#macro ( analysisIncludefile  )
+<!-- page specific styles -->
+<link rel="stylesheet" href="${ctx}/static/bootstrap-ace/css/jquery-ui.min.css" />
+<link rel="stylesheet" href="${ctx}/static/bootstrap-ace/css/ui.jqgrid.css" />
+<link rel="stylesheet" href="${ctx}/static/bootstrap-ace/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${ctx}/static/bootstrap-ace/css/font-awesome.min.css" />
+
+<!-- ace styles -->
+<link rel="stylesheet" href="${ctx}/static/bootstrap-ace/css/ace.min.css" />
+
+<!-- page specific scripts -->
+<script src="${ctx}/static/bootstrap-ace/js/jqGrid/jquery.jqGrid.min.js"></script>
+<script src="${ctx}/static/bootstrap-ace/js/jqGrid/i18n/grid.locale-cn.js"></script>
+<script src="${ctx}/static/bootstrap-ace/js/jquery-ui.min.js"></script>
+<script src="${ctx}/static/bootstrap-ace/js/bootbox.min.js"></script>
+
+<style type="text/css">
+	.ui-jqgrid .ui-userdata{height:39px}
+	.page-header{padding-bottom:0px}
+	.page-header{margin:0 0 4px}
+	.btn-sm{padding:3px 9px}
+	.ace-nav{height:0}
+</style>
+
+#end

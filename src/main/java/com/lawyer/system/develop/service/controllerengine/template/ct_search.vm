@@ -1,0 +1,35 @@
+## 查询功能
+#macro ( analysisSearch )
+##替换相关功能名称
+
+	/**
+	 * <p>跳转到列表页面</p>
+	 */
+	@RequiresPermissions("${tableFieldCode}:search")
+	@RequestMappingName(value = "跳转到列表页面")
+	@RequestMapping(value = "toSearch", method = RequestMethod.GET)
+	public String toSearch(Model model) {
+		return "${packagePathBySplit}/${tableFieldCode}";
+	}
+	
+	/**
+	 * 查询${tableName}
+	 */
+	@RequiresPermissions("${tableFieldCode}:search")
+	@RequestMappingName(value = "查询${tableName}")
+	@RequestMapping(value = "search", method = RequestMethod.POST)
+	@ResponseBody
+	public Results search(@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "rows", defaultValue = PageParameter.DEFAULT_PAGE_SIZE+"") int rows,
+			HttpServletRequest request,HttpServletResponse response){
+		
+		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
+		
+		Results results = ${tableFieldCode}Service.searchByPage(searchParams,page,rows);
+		
+		logger.info(new JacksonUtil().getJson(results));
+		return results;
+		
+	}
+
+#end

@@ -1,0 +1,30 @@
+## 增加功能
+#macro ( analysisAdd )
+##替换相关功能名称
+
+	/**
+	 * <p>跳转到添加页面</p>
+	 */
+	@RequiresPermissions("${tableFieldCode}:add")
+	@RequestMappingName(value = "跳转到添加页面")
+	@RequestMapping(value = "toAdd", method = RequestMethod.GET)
+	public String toAdd(Model model) {
+		return "${packagePathBySplit}/${tableFieldCode}Add";
+	}
+	
+	/**
+	 * <p>增加${tableName}</p>
+	 */
+	@RequiresPermissions("${tableFieldCode}:add")
+	@RequestMappingName(value = "增加${tableName}")
+	@RequestMapping(value = "add", method = RequestMethod.POST)
+	@ResponseBody
+	public Results add(@Valid  ${tableClassCode} ${tableFieldCode},HttpServletRequest request) {
+		
+		Results results = ${tableFieldCode}Service.add(${tableFieldCode});
+		
+		logger.info(new JacksonUtil().getJson(results));
+		return results;
+	}
+
+#end

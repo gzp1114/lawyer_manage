@@ -1,0 +1,21 @@
+## 增加功能
+#macro ( analysisAdd )
+##替换相关功能名称
+
+	/**
+	 * 增加${tableName}
+	 * @param ${tableFieldCode}
+	 * @return Results
+	 */
+	public Results add(${tableClassCode} ${tableFieldCode}){
+		
+		${tableFieldCode}Dao.save(${tableFieldCode});
+		
+		Results results = new Results(
+				UserCenterContents.API_RETURN_STATUS.NORMAL.value(),
+				UserCenterContents.API_RETURN_STATUS.NORMAL.desc());
+		
+		return results; 
+	}
+
+#end

@@ -1,0 +1,37 @@
+##设值
+#set($tableName="${serviceElementKit.getTableName()}")
+#set($tableFieldCode="${serviceElementKit.getTableFieldCode()}")
+#set($tableClassCode="${serviceElementKit.getTableClassCode()}")
+#set($packagePath="${serviceElementKit.getPackagePath()}")
+#set($packagePathBySplit="${serviceElementKit.getPackagePathBySplit()}")
+#set($path=$serviceElementKit.getTemplatePath())
+##包括函数
+#parse("${path}sv_add.vm")
+#parse("${path}sv_delete.vm")
+#parse("${path}sv_import.vm")
+#parse("${path}sv_modify.vm")
+#parse("${path}sv_search.vm")
+#parse("${path}sv_find.vm")
+##
+##初始调用文档解析
+#document()
+##
+##dom文档模型
+#macro (document)
+#analysisImport()
+##
+@Service("${tableFieldCode}Service")
+public class ${tableClassCode}Service {
+	
+	private static Logger logger = LoggerFactory.getLogger(${tableClassCode}Service.class);
+	
+	@Autowired
+	private ${tableClassCode}Mapper ${tableFieldCode}Dao;
+
+	#analysisAdd()
+	#analysisDelete()
+	#analysisModify()
+	#analysisFind()
+	#analysisSearch()
+}
+#end

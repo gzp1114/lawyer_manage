@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper namespace="com.lawyer.system.lawyersource.dao.mybatis.SysDebtorMapper">
+	<!-- sys_debtor query field-->
+	<sql id="columns">
+      id,
+      debtor_company_id,
+      case_id,
+      exec_courtname,
+      courtcode,
+      case_createTime,
+      casecode,
+      execute_money,
+      case_state,
+      note,
+      createtime,
+      operator_id
+	</sql>
+	
+	<!-- sys_debtor result map-->
+  <resultMap type="SysDebtor" id="SysDebtorMap">
+		<id column="id" property="id"/>
+    	<result column="debtor_company_id" property="debtorCompanyId"/>
+    	<result column="case_id" property="caseId"/>
+    	<result column="exec_courtname" property="execCourtname"/>
+    	<result column="courtcode" property="courtcode"/>
+    	<result column="case_createTime" property="caseCreatetime"/>
+    	<result column="casecode" property="casecode"/>
+    	<result column="execute_money" property="executeMoney"/>
+    	<result column="case_state" property="caseState"/>
+    	<result column="note" property="note"/>
+    	<result column="createtime" property="createtime"/>
+    	<result column="operator_id" property="operatorId"/>
+  </resultMap>
+  
+  <!-- save sys_debtor -->
+  <insert id="save" parameterType="SysDebtor" >
+		insert into sys_debtor (
+		<include refid="columns"/>)
+			values (
+				#{id},
+				#{debtorCompanyId},
+				#{caseId},
+				#{execCourtname},
+				#{courtcode},
+				#{caseCreatetime},
+				#{casecode},
+				#{executeMoney},
+				#{caseState},
+				#{note},
+				#{createtime},
+				#{operatorId}
+			)
+	</insert>
+	
+	<insert id="saveMore" parameterType="SysDebtor" >
+		insert into sys_debtor (
+		<include refid="columns"/>)
+			values 
+		<foreach collection="list" item="item" index="index" separator="," >  
+			(
+				#{item.id},
+				#{item.debtorCompanyId},
+				#{item.caseId},
+				#{item.execCourtname},
+				#{item.courtcode},
+				#{item.caseCreatetime},
+				#{item.casecode},
+				#{item.executeMoney},
+				#{item.caseState},
+				#{item.note},
+				#{item.createtime},
+				#{item.operatorId}
+			)
+		</foreach>
+	</insert>
+	
+	<!-- update sys_debtor -->
+	<update id="update" parameterType="SysDebtor">
+	    UPDATE sys_debtor 
+	    <set>
+			<if test="debtorCompanyId != null">debtor_company_id = #{debtorCompanyId}, </if>
+			<if test="caseId != null">case_id = #{caseId}, </if>
+			<if test="execCourtname != null">exec_courtname = #{execCourtname}, </if>
+			<if test="courtcode != null">courtcode = #{courtcode}, </if>
+			<if test="caseCreatetime != null">case_createTime = #{caseCreatetime}, </if>
+			<if test="casecode != null">casecode = #{casecode}, </if>
+			<if test="executeMoney != null">execute_money = #{executeMoney}, </if>
+			<if test="caseState != null">case_state = #{caseState}, </if>
+			<if test="note != null">note = #{note}, </if>
+			<if test="createtime != null">createtime = #{createtime}, </if>
+			<if test="operatorId != null">operator_id = #{operatorId}, </if>
+	    </set>
+	    WHERE id = #{id}
+  </update>
+  
+  <!-- 分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="SysDebtorMap">
+		SELECT <include refid="columns" /> FROM sys_debtor
+			<where>
+				<if test="id != null and id !=''"> id = #{id} </if>
+				<if test="debtorCompanyId != null and debtorCompanyId !=''"> and debtor_company_id = #{debtorCompanyId} </if>
+				<if test="caseId != null and caseId !=''"> and case_id = #{caseId} </if>
+				<if test="execCourtname != null and execCourtname !=''"> and exec_courtname = #{execCourtname} </if>
+				<if test="courtcode != null and courtcode !=''"> and courtcode = #{courtcode} </if>
+				<if test="caseCreatetime != null and caseCreatetime !=''"> and case_createTime = #{caseCreatetime} </if>
+				<if test="casecode != null and casecode !=''"> and casecode = #{casecode} </if>
+				<if test="executeMoney != null and executeMoney !=''"> and execute_money = #{executeMoney} </if>
+				<if test="caseState != null and caseState !=''"> and case_state = #{caseState} </if>
+				<if test="note != null and note !=''"> and note = #{note} </if>
+				<if test="createtime != null and createtime !=''"> and createtime = #{createtime} </if>
+				<if test="operatorId != null and operatorId !=''"> and operator_id = #{operatorId} </if>
+			</where>
+	</select>
+  
+  <!-- query sys_debtor by primary key -->
+  <select id="findById"  resultMap="SysDebtorMap" parameterType="Long">
+		SELECT <include refid="columns"/>  FROM sys_debtor where id=#{id}
+	</select>
+	
+	<select id="findByCompanyid"  resultMap="SysDebtorMap" parameterType="Long">
+		SELECT <include refid="columns"/>  FROM sys_debtor where debtor_company_id=#{debtorCompanyId}
+	</select>
+	
+	<select id="findByCidCasecode"  resultMap="SysDebtorMap" parameterType="map">
+		SELECT <include refid="columns"/>  FROM sys_debtor
+		<where>
+			<if test="debtorCompanyId != null and debtorCompanyId !=''"> and debtor_company_id = #{debtorCompanyId} </if>
+			<if test="casecode != null and casecode !=''"> and casecode = #{casecode} </if>
+		</where> 
+	</select>
+	
+	<!-- delete sys_debtor by primary key -->
+  <delete id="deleteById"  parameterType="Long">
+		delete FROM sys_debtor where id=#{id}
+  </delete>
+</mapper> 

@@ -1,0 +1,33 @@
+## 查询功能
+#macro ( analysisSearch )
+##替换相关功能名称
+
+	/**
+	 * 按条件分页查询记录
+	 * @param searchParams 条件
+	 * @return Results
+	 */
+	public Results searchByPage(Map<String,Object> searchParams,Integer pageNumber, Integer pageSize) {
+		
+		PageParameter page = new PageParameter(); 
+		page.setCurrentPage(pageNumber); 
+		page.setPageSize(pageSize); 
+		searchParams.put("page", page); 
+
+		List<${tableClassCode}> list = ${tableFieldCode}Dao.searchByPage(searchParams);
+		
+		Map rmap = new HashMap();
+		rmap.put("total", page.getTotalPage());
+		rmap.put("page", page.getCurrentPage());
+		rmap.put("records", page.getTotalCount());
+		
+		rmap.put("rows", list);
+		
+		Results results = new Results(
+				UserCenterContents.API_RETURN_STATUS.NORMAL.value(),
+				UserCenterContents.API_RETURN_STATUS.NORMAL.desc(),rmap);
+		
+		return results; 
+	}
+
+#end

@@ -1,0 +1,38 @@
+## 修改功能
+#macro ( analysisModify )
+##替换相关功能名称
+
+	/**
+	 * <p>跳转到修改页面</p>
+	 * 
+	 */
+	@RequiresPermissions("${tableFieldCode}:modify")
+	@RequestMappingName(value = "跳转到修改页面")
+	@RequestMapping(value = "toModify/{id}", method = RequestMethod.GET)
+	public String toModify(@PathVariable("id")Long id,Model model,HttpServletRequest request) {
+	
+		Results results = ${tableFieldCode}Service.findById(id);
+		
+		model.addAttribute("${tableFieldCode}", results.getData());
+		return "${packagePathBySplit}/${tableFieldCode}Modify";
+		
+	}
+	
+	/**
+	 * <p>修改${tableName}</p>
+	 * 
+	 */
+	@RequiresPermissions("${tableFieldCode}:modify")
+	@RequestMappingName(value = "修改${tableName}")
+	@RequestMapping(value = "modify", method = RequestMethod.POST)
+	@ResponseBody
+	public Results modify(@Valid  ${tableClassCode} ${tableFieldCode},HttpServletRequest request) {
+		
+		Results results = ${tableFieldCode}Service.modify(${tableFieldCode});
+		
+		logger.info(new JacksonUtil().getJson(results));
+		return results;
+		
+	}
+
+#end

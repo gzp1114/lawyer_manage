@@ -1,0 +1,32 @@
+##设值
+#set($tableName="${uiElementKit.getTableName()}")
+#set($tableFieldCode="${uiElementKit.getTableFieldCode()}")
+#set($tableClassCode="${uiElementKit.getTableClassCode()}")
+#set($tableRowField="${uiElementKit.getTableRowField()}")
+#set($tableRowTitle="${uiElementKit.getTableRowTitle()}")
+#set($searchPostData="${uiElementKit.getSearchPostData()}")
+#set($path=$uiElementKit.getTemplatePath())
+##包括函数
+#parse("${path}ui_search.vm")
+#parse("${path}ui_jstable.vm")
+#parse("${path}ui_jsoperation.vm")
+#parse("${path}ui_includefile.vm")
+#parse("${path}ui_body.vm")
+##
+##初始调用文档解析
+#document()
+##
+##dom文档模型
+#macro (document)
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ include file="/static/common/default.jsp"%>
+	
+	#analysisSearch()
+	#analysisIncludefile()
+	#analysisBody()
+	<script type="text/javascript">
+		
+		#analysisJstable()
+		#analysisJsoperation()
+	</script>
+#end

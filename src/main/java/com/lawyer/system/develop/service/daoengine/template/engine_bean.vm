@@ -1,0 +1,204 @@
+##常量
+#set($TABLES_NODE="Tables") 
+##
+#set($TABLE_NAME="Code")
+##
+#set($TABLE_FIELD_COLUMN="Code")
+##
+#set($TABLE_COLUMNS="Columns")
+##
+#set($FIELD_DATA_TYPE="DataType")
+##
+##表
+#set($CREATE_TABLE=$tableService.tableNames())
+##
+#set($DAO_PACKAGE_PATH="${tableService.packagePath()}.domain")
+##
+##包括函数
+#set($path="daoenginetemplate/")
+##
+##解析body元素(递归)
+#macro ( recursiveBody $childList)
+##
+#foreach ( $child in $childList.getChildren() )
+##
+#foreach ( $childs in $child.getChildren() )
+##
+#foreach ( $childss in $childs.getChildren() )
+##
+#foreach ( $childsss in $childss.getChildren() )
+##
+#if($childsss.getName() == $TABLES_NODE)
+##
+#foreach ( $childssss in $childsss.getChildren() )
+##
+#set($tableName="")
+##
+#foreach ( $childsssss in $childssss.getChildren() )
+##
+#if($childsssss.getName() == $TABLE_NAME)
+##
+#set($tableName=$childsssss.getText())
+##
+#end
+##
+#if($childsssss.getName() == $TABLE_COLUMNS && $tableName == $CREATE_TABLE)
+##
+#table($childsssss,$tableName)
+##
+#stop
+##
+#end
+##
+#end
+##
+#end	
+##
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+#macro ( table $tableNode,$tableName)
+##
+package $DAO_PACKAGE_PATH;
+##导入包
+#importApi($tableNode)
+##
+
+@MyBatisDomain
+public class $tableService.tableName($tableName) extends DomainBase implements Serializable{
+##类构造函数
+#javaStruct($tableName)
+##
+##javabean 字段
+#beanField($tableNode,$tableName)
+##
+##字段 get set
+#beanFieldGetSet($tableNode)
+##
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
+}
+#end
+##
+#macro ( javaStruct $tableName)
+
+	public $tableService.tableName($tableName)() {
+		
+	}
+#end
+##
+#macro ( importApi $tableNode)
+##
+import java.io.Serializable;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import com.ariadnethread.cores.framework.domain.DomainBase;
+import com.ariadnethread.cores.framework.mybatis.MyBatisDomain;
+#foreach    ( $Columns in $tableNode.getChildren() )
+#foreach        ( $Columnss in $Columns.getChildren() )
+#if                ($Columnss.getName() == $FIELD_DATA_TYPE && $tableService.isDataTypeMap($Columnss.getText()))
+$tableService.importByFieldType($Columnss.getText())
+#end
+#end
+#end
+#end
+##
+#macro ( beanField $tableNode)
+##
+#foreach ( $Columns in $tableNode.getChildren() )
+##
+#set($fieldName="")
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == $TABLE_FIELD_COLUMN)
+##
+#set($fieldName=$tableService.tableField($Columnss.getText()))
+##
+#end
+##
+#end
+##
+#set($Comment="")
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == "Comment")
+##
+#set($Comment=$Columnss.getText())
+##
+#end
+##
+#end
+##
+#foreach ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == $FIELD_DATA_TYPE)
+##
+
+	/**
+	*  $Comment
+	*/
+	private $tableService.fieldTypeToJavaType($Columnss.getText()) $fieldName;
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+#macro ( beanFieldGetSet $tableNode)
+##
+#foreach ( $Columns in $tableNode.getChildren() )
+##
+#set($fieldName="")
+##
+#set($fieldNameSet="")
+##
+#foreach   ( $Columnss in $Columns.getChildren() )
+##
+#if           ($Columnss.getName() == $TABLE_FIELD_COLUMN)
+##
+#set($fieldName=$tableService.tableName($Columnss.getText()))
+##
+#set($fieldNameSet=$tableService.tableField($Columnss.getText()))
+##
+#end
+##
+#end
+##
+#foreach  ( $Columnss in $Columns.getChildren() )
+##
+#if($Columnss.getName() == $FIELD_DATA_TYPE)
+##
+#set($javaType=$tableService.fieldTypeToJavaType($Columnss.getText()))
+##
+	${tableService.fieldJsonType($Columnss.getText())}
+	public void set$fieldName($javaType $fieldNameSet){
+		this.$fieldNameSet = $fieldNameSet;
+	}
+	
+	public $javaType get$fieldName(){
+		return $fieldNameSet;
+	}
+#end
+##
+#end
+##
+#end
+##
+#end
+##
+#recursiveBody($root.getRootElement())
+##

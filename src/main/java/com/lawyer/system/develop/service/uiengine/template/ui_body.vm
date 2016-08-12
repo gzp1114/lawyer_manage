@@ -1,0 +1,13 @@
+## 查询列表
+#macro ( analysisBody )
+	<div class="row">
+		<div class="col-xs-12">
+	
+			<table id="grid-table"></table>
+	
+			<div id="grid-pager"></div>
+	
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+
+#end

@@ -1,0 +1,36 @@
+##设值
+#set($tableName="${controllerElementKit.getTableName()}")
+#set($tableFieldCode="${controllerElementKit.getTableFieldCode()}")
+#set($tableClassCode="${controllerElementKit.getTableClassCode()}")
+#set($packagePath="${controllerElementKit.getPackagePath()}")
+#set($packagePathBySplit="${controllerElementKit.getPackagePathBySplit()}")
+#set($path=$controllerElementKit.getTemplatePath())
+##包括函数
+#parse("${path}ct_add.vm")
+#parse("${path}ct_delete.vm")
+#parse("${path}ct_import.vm")
+#parse("${path}ct_modify.vm")
+#parse("${path}ct_search.vm")
+##
+##初始调用文档解析
+#document()
+##
+##dom文档模型
+#macro (document)
+#analysisImport()
+##
+@Controller
+@RequestMapping(value = "/${tableFieldCode}")
+public class ${tableClassCode}Controller {
+	
+	private static Logger logger = LoggerFactory.getLogger(${tableClassCode}Controller.class);
+	
+	@Autowired
+	private ${tableClassCode}Service ${tableFieldCode}Service;
+
+	#analysisAdd()
+	#analysisDelete()
+	#analysisModify()
+	#analysisSearch()
+}
+#end
