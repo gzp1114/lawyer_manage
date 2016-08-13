@@ -33,7 +33,7 @@ public class SysClaimCompany extends DomainBase implements Serializable{
 	/**
 	*  公司注册号
 	*/
-	private String  registerNumber;
+	private String registerNumber;
 
 	/**
 	*  公司类型

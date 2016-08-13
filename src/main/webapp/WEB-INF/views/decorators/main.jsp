@@ -23,10 +23,8 @@
 	<script type="text/javascript" src="${ctx}/static/tools/page.js"></script>
 
     <!--日历控件-->
-    <%--  <script type="text/javascript" src="${ctx}/static/threadui/datejs/jquery-1.7.2.min.js"></script>  --%> 
-    <script type="text/javascript" src="${ctx}/static/threadui/datejs/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/threadui/datejs/jquery-1.11.3.js"></script>
     <script type="text/javascript" src="${ctx}/static/threadui/datejs/jquery-ui-1.7.1.custom.min.js"></script>
-    <%-- <script type="text/javascript" src="${ctx}/static/threadui/datejs/daterangepicker.jQuery.js"></script> --%> 
     <script type="text/javascript" src="${ctx}/static/threadui/datejs/moment.js"></script>
     <script type="text/javascript" src="${ctx}/static/threadui/datejs/daterangepicker.js"></script>
     
@@ -63,8 +61,8 @@
 <script type="text/javascript">  DD_belatedPNG.fix('.manager_tip,  .manager_disc, .manager_array, .manager_sale, .manager_tip span, .manager_down, .cinema_up, .cinema_edit');   </script>
 <![endif]-->
 
-<script type="text/javascript" src="${ctx}/static/threadui/js/jquery.select.js"></script>
-<script type="text/javascript" src="${ctx}/static/threadui/js/demo.js"></script>
+<%-- <script type="text/javascript" src="${ctx}/static/threadui/js/jquery.select.js"></script>
+<script type="text/javascript" src="${ctx}/static/threadui/js/demo.js"></script> --%>
 
     
 </body>

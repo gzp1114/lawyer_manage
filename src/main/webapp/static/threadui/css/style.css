@@ -664,6 +664,11 @@
     float: left;
 }
 
+.manager_number .manager_click2 {
+    background-color: rgb(87, 149, 245);
+    color: #FCFCFC;
+}
+
 .manager_up {
     width: 33px!important;
     margin-left: 10px;
@@ -1168,7 +1173,7 @@
     height: 30px;
     line-height: 30px;
     padding-left: 10px;
-    width: 180px;
+    width: 240px;
     padding-right: 10px;
     border: 1px solid #dfe7f0;
     color: #6f7a85!important;

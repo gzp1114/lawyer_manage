@@ -1,12 +1,12 @@
 package com.lawyer.system.lawyersource.domain;
 import java.io.Serializable;
+import java.util.Date;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lawyer.cores.framework.domain.DomainBase;
 import com.lawyer.cores.framework.mybatis.MyBatisDomain;
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @MyBatisDomain
 public class SysLawyerSource extends DomainBase implements Serializable{

@@ -85,7 +85,7 @@ public interface $tableService.tableName($tableName)Mapper {
 import java.util.List;
 import java.util.Map;
 
-import com.ariadnethread.cores.framework.mybatis.MyBatisRepository;
+import com.lawyer.cores.framework.mybatis.MyBatisRepository;
 import ${tableService.packagePath()}.domain.$tableService.tableName($tableName);
 #end
 ##

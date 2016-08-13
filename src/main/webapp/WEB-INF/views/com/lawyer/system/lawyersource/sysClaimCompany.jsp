@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>债务信息管理</title>
+		<title>债权信息管理</title>
 		<style type="text/css">
 			#sidebar{
 				min-height: 200px;
@@ -32,19 +32,19 @@
 		        <div class="cinema_title">
 		            <a href="#">案源中心</a>
 		            >
-		            <a id="userinfo_list_href" href="${ctx}/sysDebtorCompany/toSearch">债务信息管理</a>
+		            <a id="userinfo_list_href" href="${ctx}/sysClaimCompany/toSearch">债权信息管理</a>
 		        </div>
 		    </div>
-			<form id="sysDebtorCompanySearchForm"  method="get">
+			<form id="sysClaimCompanySearchForm"  method="get">
 			       <div class="cinema_search clearfix">
 						<div class="cinema_button">
-							<%-- <shiro:hasPermission name="sysDebtorCompany:search"> --%>
-								<input type="submit" id="sysDebtorCompanySearch" class="cinema_inquiry movie_no" name="" value="查询" style="background-color: rgb(87, 149, 245);">
+							<%-- <shiro:hasPermission name="sysClaimCompany:search"> --%>
+								<input type="submit" id="sysClaimCompanySearch" class="cinema_inquiry movie_no" name="" value="查询" style="background-color: rgb(87, 149, 245);">
 						</div>
 						<div class="cinema_condition width_84">
 							<div class="cinema_smart">
 								<div class="cinema_inter">
-									<input type="text" id="search_name" name="search_name" placeholder="债务主体名称" class="col-xs-10 col-sm-2"  value="${data.data.name}"/> 
+									<input type="text" id="search_name" name="search_name" placeholder="债权主体名称" class="col-xs-10 col-sm-2"  value="${data.data.name}"/> 
 								</div>
 							</div>
 						</div>
@@ -53,8 +53,8 @@
 		</div>
 		<div class="cinema_list">
 		    <div class="movie_button">
-			    <%-- <shiro:hasPermission name="sysDebtorCompany:add"> --%>
-			    	<a class="movie_new" onclick="window.location='${ctx}/sysDebtorCompany/toAdd';" style="background-color: rgb(75, 208, 131); color: rgb(255, 255, 255);">新建</a>
+			    <%-- <shiro:hasPermission name="sysClaimCompany:add"> --%>
+			    	<a class="movie_new" onclick="window.location='${ctx}/sysClaimCompany/toAdd';" style="background-color: rgb(75, 208, 131); color: rgb(255, 255, 255);">新建</a>
 			</div>
 		    <div  class="column_content">
 				 <table width="100%" height="" border="0" cellpadding="0" cellspacing="1" class="border_top">
@@ -75,10 +75,10 @@
 								<td class="column_name" style="width: 20%;" title="${res.type}">&nbsp;${res.type}</td>
 								<td class="column_createTime" style="width: 20%;" title="<fmt:formatDate value="${res.createTime}" type="date" pattern="yyyy-MM-dd hh:mm:ss"/>">&nbsp;<fmt:formatDate value="${res.createTime}" type="date" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 								<td class="column_caozuo" style="width: 19%;border-right: none;">&nbsp;
-									<%-- <shiro:hasPermission name="sysDebtorCompany:modify"> --%>
-										<a class="list_op" href="${ctx}/sysDebtorCompany/toShow/${res.id}" >详情</a>
-										<a class="list_op" href="${ctx}/sysDebtorCompany/toModify/${res.id}" >编辑</a>
-									<%-- <shiro:hasPermission name="sysDebtorCompany:delete"> --%>
+									<%-- <shiro:hasPermission name="sysClaimCompany:modify"> --%>
+										<a class="list_op" href="${ctx}/sysClaimCompany/toShow/${res.id}" >详情</a>
+										<a class="list_op" href="${ctx}/sysClaimCompany/toModify/${res.id}" >编辑</a>
+									<%-- <shiro:hasPermission name="sysClaimCompany:delete"> --%>
 										<a class="list_op" href="javaScript:deleteClick(${res.id});" >删除</a>
 									<%-- </shiro:hasPermission> --%>
 								</td>
@@ -107,7 +107,7 @@
 					type: "GET",
 					dataType: "json",
 					async: false,
-					url: '${ctx}/sysDebtorCompany/delete/'+rowId,
+					url: '${ctx}/sysClaimCompany/delete/'+rowId,
 					success: function (data) {
 						if(data!=undefined&&data.status!=undefined&&data.status.trim()=="0"){
 							$("#role_row_"+rowId).remove();

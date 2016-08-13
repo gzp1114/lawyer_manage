@@ -102,8 +102,8 @@ public class $tableService.tableName($tableName) extends DomainBase implements S
 ##
 import java.io.Serializable;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import com.ariadnethread.cores.framework.domain.DomainBase;
-import com.ariadnethread.cores.framework.mybatis.MyBatisDomain;
+import com.lawyer.cores.framework.domain.DomainBase;
+import com.lawyer.cores.framework.mybatis.MyBatisDomain;
 #foreach    ( $Columns in $tableNode.getChildren() )
 #foreach        ( $Columnss in $Columns.getChildren() )
 #if                ($Columnss.getName() == $FIELD_DATA_TYPE && $tableService.isDataTypeMap($Columnss.getText()))

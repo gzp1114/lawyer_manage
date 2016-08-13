@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace must point Dao interface -->
-<mapper namespace="com.lawyer.system.lawyersource.dao.mybatis.SysDebtorCompanyMapper">
-	<!-- sys_debtor_company query field-->
+<mapper namespace="com.lawyer.system.lawyersource.dao.mybatis.SysClaimCompanyMapper">
+	<!-- sys_claim_company query field-->
 	<sql id="columns">
       id,
       name,
@@ -21,12 +21,15 @@
       operate_status,
       create_time,
       note,
+      market_mark,
+      mark_time,
+      mark_note,
       operator_id
 	</sql>
 	
-	<!-- sys_debtor_company result map-->
-  <resultMap type="SysDebtorCompany" id="SysDebtorCompanyMap">
-    	<result column="id" property="id"/>
+	<!-- sys_claim_company result map-->
+  <resultMap type="SysClaimCompany" id="SysClaimCompanyMap">
+		<id column="id" property="id"/>
     	<result column="name" property="name"/>
     	<result column="organization_code" property="organizationCode"/>
     	<result column="register_number" property="registerNumber"/>
@@ -42,16 +45,19 @@
     	<result column="operate_status" property="operateStatus"/>
     	<result column="create_time" property="createTime"/>
     	<result column="note" property="note"/>
+    	<result column="market_mark" property="marketMark"/>
+    	<result column="mark_time" property="markTime"/>
+    	<result column="mark_note" property="markNote"/>
     	<result column="operator_id" property="operatorId"/>
   </resultMap>
   
-  <!-- save sys_debtor_company -->
-  <insert id="save" parameterType="SysDebtorCompany" >
+  <!-- save sys_claim_company -->
+  <insert id="save" parameterType="SysClaimCompany" >
   		<selectKey resultType="long" order="AFTER" keyProperty="id"> 
 			SELECT LAST_INSERT_ID() AS id 
 		</selectKey>
   
-		insert into sys_debtor_company (
+		insert into sys_claim_company (
 		<include refid="columns"/>)
 			values (
 				#{id},
@@ -70,13 +76,16 @@
 				#{operateStatus},
 				#{createTime},
 				#{note},
+				#{marketMark},
+				#{markTime},
+				#{markNote},
 				#{operatorId}
 			)
 	</insert>
 	
-	<!-- update sys_debtor_company -->
-	<update id="update" parameterType="SysDebtorCompany">
-	    UPDATE sys_debtor_company 
+	<!-- update sys_claim_company -->
+	<update id="update" parameterType="SysClaimCompany">
+	    UPDATE sys_claim_company 
 	    <set>
 			<if test="name != null">name = #{name}, </if>
 			<if test="organizationCode != null">organization_code = #{organizationCode}, </if>
@@ -93,17 +102,20 @@
 			<if test="operateStatus != null">operate_status = #{operateStatus}, </if>
 			<if test="createTime != null">create_time = #{createTime}, </if>
 			<if test="note != null">note = #{note}, </if>
+			<if test="marketMark != null">market_mark = #{marketMark}, </if>
+			<if test="markTime != null">mark_time = #{markTime}, </if>
+			<if test="markNote != null">mark_note = #{markNote}, </if>
 			<if test="operatorId != null">operator_id = #{operatorId}, </if>
 	    </set>
-	    WHERE id=#{id}
+	    WHERE id = #{id}
   </update>
   
   <!-- 分页查询 -->
-	<select id="searchByPage" parameterType="map" resultMap="SysDebtorCompanyMap">
-		SELECT <include refid="columns" /> FROM sys_debtor_company
+	<select id="searchByPage" parameterType="map" resultMap="SysClaimCompanyMap">
+		SELECT <include refid="columns" /> FROM sys_claim_company
 			<where>
-				<if test="id != null and id !=''"> and id = #{id} </if>
-				<if test="name != null and name !=''"> and name like CONCAT('%','${name}','%' ) </if>
+				<if test="id != null and id !=''"> id = #{id} </if>
+				<if test="name != null and name !=''"> and name = #{name} </if>
 				<if test="organizationCode != null and organizationCode !=''"> and organization_code = #{organizationCode} </if>
 				<if test="registerNumber != null and registerNumber !=''"> and register_number = #{registerNumber} </if>
 				<if test="type != null and type !=''"> and type = #{type} </if>
@@ -117,22 +129,21 @@
 				<if test="address != null and address !=''"> and address = #{address} </if>
 				<if test="operateStatus != null and operateStatus !=''"> and operate_status = #{operateStatus} </if>
 				<if test="createTime != null and createTime !=''"> and create_time = #{createTime} </if>
+				<if test="note != null and note !=''"> and note = #{note} </if>
+				<if test="marketMark != null and marketMark !=''"> and market_mark = #{marketMark} </if>
+				<if test="markTime != null and markTime !=''"> and mark_time = #{markTime} </if>
+				<if test="markNote != null and markNote !=''"> and mark_note = #{markNote} </if>
 				<if test="operatorId != null and operatorId !=''"> and operator_id = #{operatorId} </if>
 			</where>
 	</select>
   
-  <!-- query sys_debtor_company by primary key -->
-  <select id="findById"  resultMap="SysDebtorCompanyMap" parameterType="long">
-		SELECT <include refid="columns"/>  FROM sys_debtor_company where id=#{id}
+  <!-- query sys_claim_company by primary key -->
+  <select id="findById"  resultMap="SysClaimCompanyMap" parameterType="Long">
+		SELECT <include refid="columns"/>  FROM sys_claim_company where id=#{id}
 	</select>
 	
-	<!-- 根据名称获取公司信息 -->
-	<select id="findByName"  resultMap="SysDebtorCompanyMap" parameterType="String">
-		SELECT <include refid="columns"/>  FROM sys_debtor_company where name=#{name}
-	</select>
-	
-	<!-- delete sys_debtor_company by primary key -->
-  <delete id="deleteById"  parameterType="long">
-		delete FROM sys_debtor_company where id=#{id}
+	<!-- delete sys_claim_company by primary key -->
+  <delete id="deleteById"  parameterType="Long">
+		delete FROM sys_claim_company where id=#{id}
   </delete>
 </mapper> 

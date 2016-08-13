@@ -30,7 +30,7 @@
 	                <input type="submit" name="submit" class="login_btn" value="登 录" />
                 </form>
             </div>
-            <p class="login_footer">Copyright 2012 - 2016 京ICP备11044246号</p>
+            <p class="login_footer">债转管理平台&nbsp;&nbsp;CopyRight2013&nbsp;&nbsp;技术支持</p>
         </div>
     </div>
     <script type="text/javascript">

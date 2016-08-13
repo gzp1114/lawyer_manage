@@ -41,6 +41,7 @@
 					href="${ctx}/sysDebtorCompany/toSearch">债务信息管理</a> > <a
 					href="javascript:void(0);" class="cinema_option">债务信息展示</a>
 			</div>
+			<a href="${ctx}/sysDebtorCompany/toSearch" class="movie_return">返回列表</a>
 		</div>
 	</div>
 	<div class="cinema_list">

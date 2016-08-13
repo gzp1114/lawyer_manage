@@ -33,7 +33,7 @@
 		</div>
 		<div class="cinema_list">
 			<form class="form-horizontal" onsubmit="return sysDebtorCompanyInfoModify();" id="sysDebtorCompanyInfoModifyForm"  name="sysDebtorCompanyInfoModifyForm" >
-				<input type="hidden" id="id" name="id" value="${sysDebtorCompanyInfo.id}">
+				<input type="hidden" id="id" name="id" value="${sysDebtorCompany.id}">
 				<div class="movie_list">
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">

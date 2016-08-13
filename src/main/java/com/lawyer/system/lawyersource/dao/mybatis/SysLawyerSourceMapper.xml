@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper namespace="com.lawyer.system.lawyersource.dao.mybatis.SysLawyerSourceMapper">
+	<!-- sys_lawyer_source query field-->
+	<sql id="columns">
+      id,
+      debtor_id,
+      claim_id,
+      user_id,
+      contect_time,
+      createtime,
+      note,
+      operator_id
+	</sql>
+	
+	<!-- sys_lawyer_source result map-->
+  <resultMap type="SysLawyerSource" id="SysLawyerSourceMap">
+		<id column="id" property="id"/>
+    	<result column="debtor_id" property="debtorId"/>
+    	<result column="claim_id" property="claimId"/>
+    	<result column="user_id" property="userId"/>
+    	<result column="contect_time" property="contectTime"/>
+    	<result column="createtime" property="createtime"/>
+    	<result column="note" property="note"/>
+    	<result column="operator_id" property="operatorId"/>
+  </resultMap>
+  
+  <!-- save sys_lawyer_source -->
+  <insert id="save" parameterType="SysLawyerSource" >
+		insert into sys_lawyer_source (
+		<include refid="columns"/>)
+			values (
+				#{id},
+				#{debtorId},
+				#{claimId},
+				#{userId},
+				#{contectTime},
+				#{createtime},
+				#{note},
+				#{operatorId}
+			)
+	</insert>
+	
+	<!-- update sys_lawyer_source -->
+	<update id="update" parameterType="SysLawyerSource">
+	    UPDATE sys_lawyer_source 
+	    <set>
+			<if test="debtorId != null">debtor_id = #{debtorId}, </if>
+			<if test="claimId != null">claim_id = #{claimId}, </if>
+			<if test="userId != null">user_id = #{userId}, </if>
+			<if test="contectTime != null">contect_time = #{contectTime}, </if>
+			<if test="createtime != null">createtime = #{createtime}, </if>
+			<if test="note != null">note = #{note}, </if>
+			<if test="operatorId != null">operator_id = #{operatorId}, </if>
+	    </set>
+	    WHERE id = #{id}
+  </update>
+  
+  <!-- 分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="SysLawyerSourceMap">
+		SELECT <include refid="columns" /> FROM sys_lawyer_source
+			<where>
+				<if test="id != null and id !=''"> id = #{id} </if>
+				<if test="debtorId != null and debtorId !=''"> and debtor_id = #{debtorId} </if>
+				<if test="claimId != null and claimId !=''"> and claim_id = #{claimId} </if>
+				<if test="userId != null and userId !=''"> and user_id = #{userId} </if>
+				<if test="contectTime != null and contectTime !=''"> and contect_time = #{contectTime} </if>
+				<if test="createtime != null and createtime !=''"> and createtime = #{createtime} </if>
+				<if test="note != null and note !=''"> and note = #{note} </if>
+				<if test="operatorId != null and operatorId !=''"> and operator_id = #{operatorId} </if>
+			</where>
+	</select>
+  
+  <!-- query sys_lawyer_source by primary key -->
+  <select id="findById"  resultMap="SysLawyerSourceMap" parameterType="Long">
+		SELECT <include refid="columns"/>  FROM sys_lawyer_source where id=#{id}
+	</select>
+	
+	<!-- delete sys_lawyer_source by primary key -->
+  <delete id="deleteById"  parameterType="Long">
+		delete FROM sys_lawyer_source where id=#{id}
+  </delete>
+</mapper> 
