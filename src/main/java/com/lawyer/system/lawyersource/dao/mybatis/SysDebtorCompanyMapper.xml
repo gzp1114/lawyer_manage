@@ -131,6 +131,12 @@
 		SELECT <include refid="columns"/>  FROM sys_debtor_company where name=#{name}
 	</select>
 	
+	<!-- 根据名称模糊查询公司信息 -->
+	<select id="selectByName"  resultMap="SysDebtorCompanyMap" parameterType="String">
+		SELECT <include refid="columns"/>  FROM sys_debtor_company 
+		where name like CONCAT(CONCAT('%',#{name}),'%') limit 0,20
+	</select>
+	
 	<!-- delete sys_debtor_company by primary key -->
   <delete id="deleteById"  parameterType="long">
 		delete FROM sys_debtor_company where id=#{id}

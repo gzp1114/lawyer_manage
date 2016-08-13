@@ -107,6 +107,21 @@ public class SysDebtorCompanyService<K> {
 	}
 	
 	/**
+	 * 模糊查询债务人信息
+	 * @param sysDebtorCompany
+	 * @return Results
+	 */
+	public Results selectByName(String name){
+
+		List<SysDebtorCompany> sysDebtorCompanys = sysDebtorCompanyDao.selectByName(name);
+		
+		Results results = new Results(
+				UserCenterContents.API_RETURN_STATUS.NORMAL.value(),
+				UserCenterContents.API_RETURN_STATUS.NORMAL.desc(),sysDebtorCompanys);
+		return results; 
+	}
+	
+	/**
 	 * 查询债务详细信息
 	 * @param sysDebtorCompany
 	 * @return Results

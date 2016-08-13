@@ -1,9 +1,11 @@
 package com.lawyer.system.lawyersource.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,10 @@ import org.springframework.stereotype.Service;
 import com.lawyer.cores.framework.mybatis.PageParameter;
 import com.lawyer.cores.result.Results;
 import com.lawyer.system.lawyersource.dao.mybatis.SysClaimCompanyMapper;
+import com.lawyer.system.lawyersource.dao.mybatis.SysLawyerSourceMapper;
 import com.lawyer.system.lawyersource.domain.SysClaimCompany;
+import com.lawyer.system.lawyersource.domain.SysLawyerSource;
+import com.lawyer.system.usercenter.domain.SysUserSession;
 import com.lawyer.system.usercenter.service.UserCenterContents;
 
 @Service("sysClaimCompanyService")
@@ -22,6 +27,8 @@ public class SysClaimCompanyService {
 	
 	@Autowired
 	private SysClaimCompanyMapper sysClaimCompanyDao;
+	@Autowired
+	private SysLawyerSourceMapper sysLawyerSourceDao;
 
 	
 	/**
@@ -29,13 +36,35 @@ public class SysClaimCompanyService {
 	 * @param sysClaimCompany
 	 * @return Results
 	 */
-	public Results add(SysClaimCompany sysClaimCompany){
-		
-		sysClaimCompanyDao.save(sysClaimCompany);
-		
+	public Results add(SysClaimCompany sysClaimCompany,String debtorCompanyId){
 		Results results = new Results(
 				UserCenterContents.API_RETURN_STATUS.NORMAL.value(),
 				UserCenterContents.API_RETURN_STATUS.NORMAL.desc());
+		SysUserSession user = (SysUserSession) SecurityUtils.getSubject().getSession().getAttribute("sysUser");
+		
+		if(debtorCompanyId == null){
+			results.setStatus(UserCenterContents.API_RETURN_STATUS.PARA_ERROR.value());
+			results.setError(UserCenterContents.API_RETURN_STATUS.PARA_ERROR.desc());
+			return results;
+		}
+		
+		SysClaimCompany local = sysClaimCompanyDao.findByName(sysClaimCompany.getName());
+		if(local == null){
+			sysClaimCompany.setOperatorId(user.getId());
+			sysClaimCompany.setCreateTime(new Date());
+			sysClaimCompanyDao.save(sysClaimCompany);
+			logger.info("保存债权信息成功："+sysClaimCompany.getName());
+		}else{
+			sysClaimCompany = local;
+		}
+		
+		SysLawyerSource lawyerSource = new SysLawyerSource();
+		lawyerSource.setClaimId(sysClaimCompany.getId());
+		lawyerSource.setDebtorId(Long.valueOf(debtorCompanyId));
+		lawyerSource.setCreatetime(new Date());
+		lawyerSource.setOperatorId(user.getId());
+		sysLawyerSourceDao.save(lawyerSource);
+		logger.info("保存案源信息成功");
 		
 		return results; 
 	}

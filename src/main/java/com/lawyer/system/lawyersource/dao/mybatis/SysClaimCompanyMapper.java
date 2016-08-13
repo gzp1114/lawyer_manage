@@ -28,6 +28,13 @@ public interface SysClaimCompanyMapper {
 	 */
 	 public SysClaimCompany findById(Long id);
 	 
+	 /**
+	  * 根据名称获取公司信息 
+	  * @param name
+	  * @return
+	  */
+	 public SysClaimCompany findByName(String name );
+	 
 	/**
 	 * 按条件分页查询记录
 	 * @param searchParams 条件

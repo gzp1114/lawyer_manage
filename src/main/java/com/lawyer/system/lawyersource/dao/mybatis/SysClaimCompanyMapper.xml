@@ -142,6 +142,10 @@
 		SELECT <include refid="columns"/>  FROM sys_claim_company where id=#{id}
 	</select>
 	
+	<select id="findByName"  resultMap="SysClaimCompanyMap" parameterType="String">
+		SELECT <include refid="columns"/>  FROM sys_claim_company where name=#{name}
+	</select>
+	
 	<!-- delete sys_claim_company by primary key -->
   <delete id="deleteById"  parameterType="Long">
 		delete FROM sys_claim_company where id=#{id}

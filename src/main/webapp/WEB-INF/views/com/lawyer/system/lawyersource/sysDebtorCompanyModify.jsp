@@ -184,13 +184,12 @@
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
-								<input id="note" type="text" name="note" value="${sysDebtorCompany.note}" maxlength="50" />
+								<textarea rows="6" cols="60" class="form_textarea" id="note" name="note" maxlength="400" >${sysDebtorCompany.note}</textarea>
 							</div>
 						</dd>
 					</dl>
 					<div class="clearfix"></div>
 					
-					<div class="clearfix"></div>
 					<a class="movie_continue">
 						<input type="submit" name="submit" id="submit" value="提交" class="cinema_inquiry" />
 					</a>

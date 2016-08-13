@@ -1,16 +1,11 @@
 package com.lawyer.system.lawyersource.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +54,8 @@ public class SysClaimCompanyController {
 	@ResponseBody
 	public Results add(@Valid  SysClaimCompany sysClaimCompany,HttpServletRequest request) {
 		
-		Results results = sysClaimCompanyService.add(sysClaimCompany);
+		String debtorCompanyId = request.getParameter("debtorid");
+		Results results = sysClaimCompanyService.add(sysClaimCompany,debtorCompanyId);
 		
 		logger.info(new JacksonUtil().getJson(results));
 		return results;

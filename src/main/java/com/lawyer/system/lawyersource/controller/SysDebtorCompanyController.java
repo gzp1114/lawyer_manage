@@ -191,5 +191,21 @@ public class SysDebtorCompanyController {
 		return "com/lawyer/system/lawyersource/sysDebtorCompanyShow";
 		
 	}
+	
+	/**
+	 * <p>修改债务人信息</p>
+	 * 
+	 */
+	@RequestMappingName(value = "根据名称模糊查询债务人信息")
+	@RequestMapping(value = "select", method = RequestMethod.GET)
+	@ResponseBody
+	public Results select(HttpServletRequest request) {
+		String name = request.getParameter("name");
+		Results results = sysDebtorCompanyService.selectByName(name);
+		
+		logger.info(new JacksonUtil().getJson(results));
+		return results;
+		
+	}
 
 }

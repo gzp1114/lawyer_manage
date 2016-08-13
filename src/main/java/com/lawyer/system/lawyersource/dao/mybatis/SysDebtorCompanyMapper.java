@@ -30,10 +30,17 @@ public interface SysDebtorCompanyMapper {
 	 
 	 /**
 	  * 根据名称获取公司信息 
-	  * @param id
+	  * @param name
 	  * @return
 	  */
 	 public SysDebtorCompany findByName(String name );
+	 
+	 /**
+	  * 根据名称模糊查询公司信息
+	  * @param name
+	  * @return
+	  */
+	 public List<SysDebtorCompany> selectByName(String name );
 	 
 	/**
 	 * 按条件分页查询记录
