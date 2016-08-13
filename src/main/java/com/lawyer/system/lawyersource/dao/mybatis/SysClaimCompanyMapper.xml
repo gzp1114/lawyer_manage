@@ -115,7 +115,7 @@
 		SELECT <include refid="columns" /> FROM sys_claim_company
 			<where>
 				<if test="id != null and id !=''"> id = #{id} </if>
-				<if test="name != null and name !=''"> and name = #{name} </if>
+				<if test="name != null and name !=''"> and name like CONCAT('%','${name}','%' ) </if>
 				<if test="organizationCode != null and organizationCode !=''"> and organization_code = #{organizationCode} </if>
 				<if test="registerNumber != null and registerNumber !=''"> and register_number = #{registerNumber} </if>
 				<if test="type != null and type !=''"> and type = #{type} </if>

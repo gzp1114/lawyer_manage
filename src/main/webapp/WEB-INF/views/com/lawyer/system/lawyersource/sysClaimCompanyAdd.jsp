@@ -254,7 +254,6 @@
 		
 			function sysClaimCompanyAdd(){
 				if($("#sysClaimCompanyAddForm").validationEngine("validate")){
-					var result = true;
 					var checkRoles = $(".label-success").find(".roleId");
 					var roleids = "";
 					for (var i = 0; i < checkRoles.length; i++) {
@@ -268,20 +267,17 @@
 				        data: $('#sysClaimCompanyAddForm').serialize(),
 				        success: function (data) {
 				        	if(data!=undefined&&data.status!=undefined&&data.status.trim()=='0'){
-				        		result = true;
 				        		alert("保存成功！");
 				        		window.location.href = $("#userinfo_list_href").attr("href");
 				        	}else{
-					        	result = false;
 				        		alert(data.error);
 				        	}
 				        },
 				        error: function(data) {
-				        	result = false;
 			        		alert(data.error);
 				         }
 				    });
-					return result;
+					return false;
 				}
 			};
 			

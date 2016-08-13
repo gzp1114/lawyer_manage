@@ -119,7 +119,15 @@ public class SysClaimCompanyController {
 //	@RequiresPermissions("sysClaimCompany:search")
 	@RequestMappingName(value = "跳转到列表页面")
 	@RequestMapping(value = "toSearch", method = RequestMethod.GET)
-	public String toSearch(Model model) {
+	public String toSearch(@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "rows", defaultValue = PageParameter.DEFAULT_PAGE_SIZE+"") int rows,
+			HttpServletRequest request,HttpServletResponse response,Model model) {
+		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
+		Results results = sysClaimCompanyService.searchByPage(searchParams,page,rows);
+		
+		logger.info(new JacksonUtil().getJson(results));
+		model.addAttribute("data", results);
+		
 		return "com/lawyer/system/lawyersource/sysClaimCompany";
 	}
 	

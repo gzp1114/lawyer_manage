@@ -21,12 +21,20 @@ public interface SysLawyerSourceMapper {
 	 * @return 
 	 */
 	 public void update(SysLawyerSource sysLawyerSource);
+	 
   	/**
 	 * query sys_lawyer_source by primary key 
 	 * @param Long id
 	 * @return SysLawyerSource
 	 */
 	 public SysLawyerSource findById(Long id);
+	 
+	 /**
+	 * query sys_lawyer_source by primary key 
+	 * @param Long id
+	 * @return SysLawyerSource
+	 */
+	 public SysLawyerSource findUnique(Map<String,Object> params);
 	 
 	/**
 	 * 按条件分页查询记录

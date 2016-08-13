@@ -58,7 +58,19 @@ public class SysClaimCompanyService {
 			sysClaimCompany = local;
 		}
 		
-		SysLawyerSource lawyerSource = new SysLawyerSource();
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		rmap.put("debtorId", debtorCompanyId);
+		rmap.put("claimId", sysClaimCompany.getId());
+		SysLawyerSource lawyerSource = sysLawyerSourceDao.findUnique(rmap);
+		if(lawyerSource != null){
+			
+			results.setStatus("-1");
+			results.setError("已存在此案源信息");
+			return results;
+			
+		}
+		
+		lawyerSource = new SysLawyerSource();
 		lawyerSource.setClaimId(sysClaimCompany.getId());
 		lawyerSource.setDebtorId(Long.valueOf(debtorCompanyId));
 		lawyerSource.setCreatetime(new Date());
@@ -132,12 +144,15 @@ public class SysClaimCompanyService {
 
 		List<SysClaimCompany> list = sysClaimCompanyDao.searchByPage(searchParams);
 		
-		Map rmap = new HashMap();
+		Map<String, Object> rmap = new HashMap<String, Object>();
 		rmap.put("total", page.getTotalPage());
 		rmap.put("page", page.getCurrentPage());
 		rmap.put("records", page.getTotalCount());
-		
+		rmap.put("pageSize", page.getPageSize());
 		rmap.put("rows", list);
+		
+		String name = searchParams.get("name")==null?"":String.valueOf(searchParams.get("name"));
+		rmap.put("name", name);  
 		
 		Results results = new Results(
 				UserCenterContents.API_RETURN_STATUS.NORMAL.value(),

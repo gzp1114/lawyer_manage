@@ -78,6 +78,10 @@
 		SELECT <include refid="columns"/>  FROM sys_lawyer_source where id=#{id}
 	</select>
 	
+	<select id="findUnique"  resultMap="SysLawyerSourceMap">
+		SELECT <include refid="columns"/>  FROM sys_lawyer_source where debtor_id=#{debtorId} and claim_id = #{claimId}
+	</select>
+	
 	<!-- delete sys_lawyer_source by primary key -->
   <delete id="deleteById"  parameterType="Long">
 		delete FROM sys_lawyer_source where id=#{id}
