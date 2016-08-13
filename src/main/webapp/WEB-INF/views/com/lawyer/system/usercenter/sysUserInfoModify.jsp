@@ -28,7 +28,6 @@
 		            <a id="userinfo_list_href" href="${ctx}/sysUser/toSearch">用户管理</a> >
 		            <a href="javascript:void(0);" class="cinema_option">编辑用户信息</a>
 		        </div>
-		        <!-- <a onclick="javascript:history.back(-1);" class="movie_return">返回列表</a> -->
 		        <a href="${ctx}/sysUser/toSearch" class="movie_return">返回列表</a>
 		    </div>
 		</div>

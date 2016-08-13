@@ -84,6 +84,8 @@ public class ComUtil {
 		}else if(companyName.contains("有限责任公司")){
 			int end = companyName.indexOf("有限责任公司");
 			newname = companyName.substring(0, end)+"有限责任公司";
+		}else{
+			newname = companyName;
 		}
 		
 		return newname;

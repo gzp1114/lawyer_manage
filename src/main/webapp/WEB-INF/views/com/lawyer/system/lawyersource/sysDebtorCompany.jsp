@@ -78,8 +78,8 @@
 								<td class="column_createTime" style="width: 20%;" title="<fmt:formatDate value="${res.createTime}" type="date" pattern="yyyy-MM-dd hh:mm:ss"/>">&nbsp;<fmt:formatDate value="${res.createTime}" type="date" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 								<td class="column_caozuo" style="width: 19%;border-right: none;">&nbsp;
 									<%-- <shiro:hasPermission name="sysDebtorCompany:modify"> --%>
-										<a class="list_op" onclick="window.location='${ctx}/sysDebtorCompany/toShow/${res.id}';" >详情</a>
-										<a class="list_op" onclick="window.location='${ctx}/sysDebtorCompany/toModify/${res.id}';" >编辑</a>
+										<a class="list_op" href="${ctx}/sysDebtorCompany/toShow/${res.id}" >详情</a>
+										<a class="list_op" href="${ctx}/sysDebtorCompany/toModify/${res.id}" >编辑</a>
 									<%-- <shiro:hasPermission name="sysDebtorCompany:delete"> --%>
 										<a class="list_op" href="javaScript:deleteClick(${res.id});" >删除</a>
 									<%-- </shiro:hasPermission> --%>

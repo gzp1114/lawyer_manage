@@ -82,7 +82,7 @@ public class sysUserController {
 	@RequestMapping(value = "toModify/{id}", method = RequestMethod.GET)
 	public String toModify(@PathVariable("id")Long id,Model model,HttpServletRequest request) {
 		
-		Results results = null;
+		Results results = sysUserSessionService.findById(id);
 		
 		model.addAttribute("sysUser", results.getData());
 		return "com/lawyer/system/usercenter/sysUserInfoModify";
