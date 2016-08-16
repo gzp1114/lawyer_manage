@@ -7,7 +7,9 @@
 	<sql id="columns">
       id,
       debtor_id,
+      debtor_name,
       claim_id,
+      claim_name,
       user_id,
       contect_time,
       createtime,
@@ -15,12 +17,28 @@
       operator_id
 	</sql>
 	
+	<sql id="querycolumns">
+      ls.id,
+      ls.debtor_id,
+      ls.debtor_name,
+      ls.claim_id,
+      ls.claim_name,
+      ls.user_id,
+      ls.contect_time,
+      ls.createtime,
+      ls.note,
+      ls.operator_id
+	</sql>
+	
 	<!-- sys_lawyer_source result map-->
   <resultMap type="SysLawyerSource" id="SysLawyerSourceMap">
 		<id column="id" property="id"/>
     	<result column="debtor_id" property="debtorId"/>
+    	<result column="debtor_name" property="debtorName"/>
     	<result column="claim_id" property="claimId"/>
+    	<result column="claim_name" property="claimName"/>
     	<result column="user_id" property="userId"/>
+    	<result column="username" property="userName"/>
     	<result column="contect_time" property="contectTime"/>
     	<result column="createtime" property="createtime"/>
     	<result column="note" property="note"/>
@@ -34,7 +52,9 @@
 			values (
 				#{id},
 				#{debtorId},
+				#{debtorName},
 				#{claimId},
+				#{claimName},
 				#{userId},
 				#{contectTime},
 				#{createtime},
@@ -48,7 +68,9 @@
 	    UPDATE sys_lawyer_source 
 	    <set>
 			<if test="debtorId != null">debtor_id = #{debtorId}, </if>
+			<if test="debtorName != null">debtor_name = #{debtorName}, </if>
 			<if test="claimId != null">claim_id = #{claimId}, </if>
+			<if test="claimName != null">claim_name = #{claimName}, </if>
 			<if test="userId != null">user_id = #{userId}, </if>
 			<if test="contectTime != null">contect_time = #{contectTime}, </if>
 			<if test="createtime != null">createtime = #{createtime}, </if>
@@ -60,11 +82,14 @@
   
   <!-- 分页查询 -->
 	<select id="searchByPage" parameterType="map" resultMap="SysLawyerSourceMap">
-		SELECT <include refid="columns" /> FROM sys_lawyer_source
+		SELECT <include refid="querycolumns" />,us.username FROM sys_lawyer_source ls
+			left join sys_user_session us on ls.user_id=us.id
 			<where>
 				<if test="id != null and id !=''"> id = #{id} </if>
 				<if test="debtorId != null and debtorId !=''"> and debtor_id = #{debtorId} </if>
+				<if test="debtorName != null and debtorName !=''"> and debtor_name like CONCAT('%','${debtorName}','%' ) </if>
 				<if test="claimId != null and claimId !=''"> and claim_id = #{claimId} </if>
+				<if test="claimName != null and claimName !=''"> and claim_name like CONCAT('%','${claimName}','%' ) </if>
 				<if test="userId != null and userId !=''"> and user_id = #{userId} </if>
 				<if test="contectTime != null and contectTime !=''"> and contect_time = #{contectTime} </if>
 				<if test="createtime != null and createtime !=''"> and createtime = #{createtime} </if>

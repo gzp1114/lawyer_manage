@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import com.lawyer.cores.framework.mybatis.PageParameter;
 import com.lawyer.cores.result.Results;
 import com.lawyer.system.lawyersource.dao.mybatis.SysClaimCompanyMapper;
+import com.lawyer.system.lawyersource.dao.mybatis.SysDebtorCompanyMapper;
 import com.lawyer.system.lawyersource.dao.mybatis.SysLawyerSourceMapper;
 import com.lawyer.system.lawyersource.domain.SysClaimCompany;
+import com.lawyer.system.lawyersource.domain.SysDebtorCompany;
 import com.lawyer.system.lawyersource.domain.SysLawyerSource;
 import com.lawyer.system.usercenter.domain.SysUserSession;
 import com.lawyer.system.usercenter.service.UserCenterContents;
@@ -25,6 +27,8 @@ public class SysClaimCompanyService {
 	
 	private static Logger logger = LoggerFactory.getLogger(SysClaimCompanyService.class);
 	
+	@Autowired
+	private SysDebtorCompanyMapper sysDebtorCompanyDao;
 	@Autowired
 	private SysClaimCompanyMapper sysClaimCompanyDao;
 	@Autowired
@@ -47,6 +51,8 @@ public class SysClaimCompanyService {
 			results.setError(UserCenterContents.API_RETURN_STATUS.PARA_ERROR.desc());
 			return results;
 		}
+		
+		SysDebtorCompany bebtor = sysDebtorCompanyDao.findById(Long.valueOf(debtorCompanyId));
 		
 		SysClaimCompany local = sysClaimCompanyDao.findByName(sysClaimCompany.getName());
 		if(local == null){
@@ -72,7 +78,9 @@ public class SysClaimCompanyService {
 		
 		lawyerSource = new SysLawyerSource();
 		lawyerSource.setClaimId(sysClaimCompany.getId());
+		lawyerSource.setClaimName(sysClaimCompany.getName());
 		lawyerSource.setDebtorId(Long.valueOf(debtorCompanyId));
+		lawyerSource.setDebtorName(bebtor.getName());
 		lawyerSource.setCreatetime(new Date());
 		lawyerSource.setOperatorId(user.getId());
 		sysLawyerSourceDao.save(lawyerSource);

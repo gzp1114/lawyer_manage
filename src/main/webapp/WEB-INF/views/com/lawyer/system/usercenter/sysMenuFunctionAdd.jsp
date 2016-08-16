@@ -21,11 +21,10 @@
 			border: 1px solid #DFE7F0;
 		}
 		</style>
+		<link type="text/css" rel="stylesheet" href="${ctx}/static/threadui/css/select.css" />
 		<link type="text/css" rel="stylesheet" href="${ctx}/static/tools/jquery-validationEngine/validationEngine.jquery.css"></link>
 	</head>
 	<body>
-		<script type="text/javascript" src="${ctx}/static/tools/jquery-validationEngine/jquery.validationEngine.js"></script>
-		<script type="text/javascript" src="${ctx}/static/tools/jquery-validationEngine/jquery.validationEngine-cn.js"></script>
 		<div class="cinema_tip">
 		    <div class="cinema_subject clearfix">
 		        <div class="cinema_title">
@@ -67,15 +66,14 @@
 							<p>菜单类型：</p>
 						</dt>
 						<dd>
-							<div class="cinema_select mleft_15">
-								<select name="menuType" id="menuType">
-									<!-- <option value="">选择菜单类型</option> -->
+                            <div class="cinema_select mleft_15">
+                            	<select name="menuType" id="menuType" class="fufong">
 									<option value="1" selected="selected">模块</option>
 									<option value="2">菜单</option>
 									<option value="3">功能</option>
 								</select>
-							</div>
-						</dd>
+                            </div>
+                        </dd>
 					</dl>
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
@@ -86,11 +84,11 @@
 							<div class="movie_type clearfix">
 								<div>
 									<label>
-										<input style="width: 0px;"  type="radio" class="ace" id="isValid" name="isValid" value="1" checked="checked">
+										<input style="width: 20px;"  type="radio" class="ace" id="isValid" name="isValid" value="1" checked="checked">
 										<span class="lbl">有效</span>
 									</label>
 									<label>
-										<input style="width: 0px;"  type="radio" class="ace" id="isValid" name="isValid" value="0">
+										<input style="width: 20px;"  type="radio" class="ace" id="isValid" name="isValid" value="0">
 										<span class="lbl">无效</span>
 									</label>
 								</div>
@@ -137,6 +135,11 @@
 				</div>
 			</form>
 		</div>
+		<script type="text/javascript" src="${ctx}/static/threadui/datejs/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="${ctx}/static/threadui/js/jquery.select.js"></script>
+		<script type="text/javascript" src="${ctx}/static/threadui/js/select_style.js"></script>
+		<script type="text/javascript" src="${ctx}/static/tools/jquery-validationEngine/jquery.validationEngine.js"></script>
+		<script type="text/javascript" src="${ctx}/static/tools/jquery-validationEngine/jquery.validationEngine-cn.js"></script>
 		<script type="text/javascript">
 			//增加菜单功能
 			function sysMenuFunctionAdd(){

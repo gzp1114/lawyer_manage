@@ -24,16 +24,31 @@ public class SysLawyerSource extends DomainBase implements Serializable{
 	*  债务人id
 	*/
 	private Long debtorId;
+	
+	/**
+	 * 债务人名称
+	 */
+	private String debtorName;
 
 	/**
 	*  债权人id
 	*/
 	private Long claimId;
+	
+	/**
+	 * 债权人名称
+	 */
+	private String claimName;
 
 	/**
 	*  联系人id
 	*/
 	private Long userId;
+	
+	/**
+	 * 联系人名称
+	 */
+	private String userName;
 
 	/**
 	*  联系时间
@@ -54,6 +69,10 @@ public class SysLawyerSource extends DomainBase implements Serializable{
 	*  操作人id
 	*/
 	private Long operatorId;
+	
+	private SysDebtorCompany debtorCompany;
+	
+	private SysClaimCompany claimCompany;
 	
 	public void setId(Long id){
 		this.id = id;
@@ -118,6 +137,47 @@ public class SysLawyerSource extends DomainBase implements Serializable{
 	public Long getOperatorId(){
 		return operatorId;
 	}
+	
+	public String getDebtorName() {
+		return debtorName;
+	}
+
+	public void setDebtorName(String debtorName) {
+		this.debtorName = debtorName;
+	}
+
+	public String getClaimName() {
+		return claimName;
+	}
+
+	public void setClaimName(String claimName) {
+		this.claimName = claimName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public SysDebtorCompany getDebtorCompany() {
+		return debtorCompany;
+	}
+
+	public void setDebtorCompany(SysDebtorCompany debtorCompany) {
+		this.debtorCompany = debtorCompany;
+	}
+
+	public SysClaimCompany getClaimCompany() {
+		return claimCompany;
+	}
+
+	public void setClaimCompany(SysClaimCompany claimCompany) {
+		this.claimCompany = claimCompany;
+	}
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);

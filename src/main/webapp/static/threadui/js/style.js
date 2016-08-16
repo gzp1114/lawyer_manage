@@ -547,14 +547,27 @@ $(function(){
             $(".xinjian_radio").removeClass("movie_check1");
             $($(".xinjian_radio").get($(this).index())).addClass("movie_check1");
 
-        })
+        });
+        $("#activity_content1 li").bind("click", function () {
+            $("#activity_content1 li").removeClass("title_current");
+            $(this).addClass("title_current");
+            $(".list_content1").addClass("hidden");
+            $($(".list_content1").get($(this).index())).removeClass("hidden");
+        });
 		$("#activity_content2 li").bind("click", function () {
             $("#activity_content2 li").removeClass("title_current");
             $(this).addClass("title_current");
             $(".list_content2").addClass("hidden");
             $($(".list_content2").get($(this).index())).removeClass("hidden");
 
-        })
+        });
+		$("#activity_content3 li").bind("click", function () {
+            $("#activity_content3 li").removeClass("title_current");
+            $(this).addClass("title_current");
+            $(".list_content3").addClass("hidden");
+            $($(".list_content3").get($(this).index())).removeClass("hidden");
+
+        });
 		
         $("#quanxian_city li a").bind("click", function () {
             $("#quanxian_city li a").removeClass("duihao");

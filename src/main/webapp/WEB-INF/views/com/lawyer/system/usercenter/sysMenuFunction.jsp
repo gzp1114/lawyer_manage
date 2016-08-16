@@ -51,7 +51,7 @@
 								<input type="text" id="search_menuName" name="search_menuName" placeholder="菜单名" class="col-xs-10 col-sm-2"  value="${res.data.menuName}"/>
 							</div>
 							<div style="display: inline-block;line-height: 30px;height: 30px;">
-								<select name="search_menuType" id="search_menuType">
+								<select name="search_menuType" id="search_menuType" class="fufong">
 									<option value="">菜单类型</option>
 									<option value="1" ${res.data.menuType==1?"selected='selected'":'' }>模块</option>
 									<option value="2" ${res.data.menuType==2?"selected='selected'":'' }>菜单</option>

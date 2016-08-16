@@ -177,7 +177,7 @@ public class SysDebtorCompanyController {
 	}
 	
 	/**
-	 * <p>跳转到修改页面</p>
+	 * <p>跳转到详情页面</p>
 	 * 
 	 */
 //	@RequiresPermissions("sysDebtorCompany:show")
@@ -193,7 +193,7 @@ public class SysDebtorCompanyController {
 	}
 	
 	/**
-	 * <p>修改债务人信息</p>
+	 * <p>模糊查询债务人信息</p>
 	 * 
 	 */
 	@RequestMappingName(value = "根据名称模糊查询债务人信息")
