@@ -1,6 +1,7 @@
 package com.lawyer.system.lawyersource.domain;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
@@ -73,6 +74,20 @@ public class SysLawyerSource extends DomainBase implements Serializable{
 	private SysDebtorCompany debtorCompany;
 	
 	private SysClaimCompany claimCompany;
+	
+	private List<SysContectEmail> contectEmails;
+	
+	private List<SysContectPhone> contectPhones;
+	
+	private List<SysContectExpress> contectExpresss;
+	
+	private List<SysContectFax> contectFaxs;
+	
+	private List<SysContectVisit> contectVisits;
+	
+	private List<SysContectInterview> contectInterviews;
+	
+	private List<SysContectSign> contectSign;
 	
 	public void setId(Long id){
 		this.id = id;
@@ -176,6 +191,62 @@ public class SysLawyerSource extends DomainBase implements Serializable{
 
 	public void setClaimCompany(SysClaimCompany claimCompany) {
 		this.claimCompany = claimCompany;
+	}
+
+	public List<SysContectEmail> getContectEmails() {
+		return contectEmails;
+	}
+
+	public void setContectEmails(List<SysContectEmail> contectEmails) {
+		this.contectEmails = contectEmails;
+	}
+
+	public List<SysContectPhone> getContectPhones() {
+		return contectPhones;
+	}
+
+	public void setContectPhones(List<SysContectPhone> contectPhones) {
+		this.contectPhones = contectPhones;
+	}
+
+	public List<SysContectExpress> getContectExpresss() {
+		return contectExpresss;
+	}
+
+	public void setContectExpresss(List<SysContectExpress> contectExpresss) {
+		this.contectExpresss = contectExpresss;
+	}
+
+	public List<SysContectFax> getContectFaxs() {
+		return contectFaxs;
+	}
+
+	public void setContectFaxs(List<SysContectFax> contectFaxs) {
+		this.contectFaxs = contectFaxs;
+	}
+
+	public List<SysContectVisit> getContectVisits() {
+		return contectVisits;
+	}
+
+	public void setContectVisits(List<SysContectVisit> contectVisits) {
+		this.contectVisits = contectVisits;
+	}
+
+	public List<SysContectInterview> getContectInterviews() {
+		return contectInterviews;
+	}
+
+	public void setContectInterviews(List<SysContectInterview> contectInterviews) {
+		this.contectInterviews = contectInterviews;
+	}
+
+	public List<SysContectSign> getContectSign() {
+		return contectSign;
+	}
+
+	public void setContectSign(List<SysContectSign> contectSign) {
+		this.contectSign = contectSign;
 	}
 
 	@Override

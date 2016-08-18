@@ -155,7 +155,7 @@ public class SysLawyerSourceController {
 	 * <p>跳转到详情页面</p>
 	 * 
 	 */
-//	@RequiresPermissions("sysDebtorCompany:show")
+//	@RequiresPermissions("sysLawyerSource:show")
 	@RequestMappingName(value = "跳转到展示页面")
 	@RequestMapping(value = "toShow/{id}", method = RequestMethod.GET)
 	public String toShow(@PathVariable("id")Long id,Model model,HttpServletRequest request) {

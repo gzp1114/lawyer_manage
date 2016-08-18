@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper namespace="com.lawyer.system.lawyersource.dao.mybatis.SysContectEmailMapper">
+	<!-- sys_contect_email query field-->
+	<sql id="columns">
+      id,
+      source_id,
+      email_address,
+      user_id,
+      send_time,
+      send_result,
+      createtime,
+      note,
+      operator_id
+	</sql>
+	
+	<sql id="querycolumns">
+      email.id,
+      email.source_id,
+      email.email_address,
+      email.user_id,
+      email.send_time,
+      email.send_result,
+      email.createtime,
+      email.note,
+      email.operator_id,
+      username
+	</sql>
+	
+	<!-- sys_contect_email result map-->
+  <resultMap type="SysContectEmail" id="SysContectEmailMap">
+		<id column="id" property="id"/>
+    	<result column="source_id" property="sourceId"/>
+    	<result column="email_address" property="emailAddress"/>
+    	<result column="user_id" property="userId"/>
+    	<result column="send_time" property="sendTime"/>
+    	<result column="send_result" property="sendResult"/>
+    	<result column="createtime" property="createtime"/>
+    	<result column="note" property="note"/>
+    	<result column="operator_id" property="operatorId"/>
+    	<result column="username" property="username"/>
+  </resultMap>
+  
+  <!-- save sys_contect_email -->
+  <insert id="save" parameterType="SysContectEmail" >
+  		<selectKey resultType="long" order="AFTER" keyProperty="id"> 
+			SELECT LAST_INSERT_ID() AS id 
+		</selectKey>
+		insert into sys_contect_email (
+		<include refid="columns"/>)
+			values (
+				#{id},
+				#{sourceId},
+				#{emailAddress},
+				#{userId},
+				#{sendTime},
+				#{sendResult},
+				#{createtime},
+				#{note},
+				#{operatorId}
+			)
+	</insert>
+	
+	<!-- update sys_contect_email -->
+	<update id="update" parameterType="SysContectEmail">
+	    UPDATE sys_contect_email 
+	    <set>
+			<if test="sourceId != null">source_id = #{sourceId}, </if>
+			<if test="emailAddress != null">email_address = #{emailAddress}, </if>
+			<if test="userId != null">user_id = #{userId}, </if>
+			<if test="sendTime != null">send_time = #{sendTime}, </if>
+			<if test="sendResult != null">send_result = #{sendResult}, </if>
+			<if test="createtime != null">createtime = #{createtime}, </if>
+			<if test="note != null">note = #{note}, </if>
+			<if test="operatorId != null">operator_id = #{operatorId}, </if>
+	    </set>
+	    WHERE id = #{id}
+  </update>
+  
+  <!-- 分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="SysContectEmailMap">
+		SELECT <include refid="columns" /> FROM sys_contect_email
+			<where>
+				<if test="id != null and id !=''"> id = #{id} </if>
+				<if test="sourceId != null and sourceId !=''"> and source_id = #{sourceId} </if>
+				<if test="emailAddress != null and emailAddress !=''"> and email_address = #{emailAddress} </if>
+				<if test="userId != null and userId !=''"> and user_id = #{userId} </if>
+				<if test="sendTime != null and sendTime !=''"> and send_time = #{sendTime} </if>
+				<if test="sendResult != null and sendResult !=''"> and send_result = #{sendResult} </if>
+				<if test="createtime != null and createtime !=''"> and createtime = #{createtime} </if>
+				<if test="note != null and note !=''"> and note = #{note} </if>
+				<if test="operatorId != null and operatorId !=''"> and operator_id = #{operatorId} </if>
+			</where>
+	</select>
+  
+  <!-- query sys_contect_email by primary key -->
+  <select id="findById"  resultMap="SysContectEmailMap" parameterType="Long">
+		SELECT <include refid="columns"/>  FROM sys_contect_email where id=#{id}
+	</select>
+	
+	<select id="findBySourceId"  resultMap="SysContectEmailMap" parameterType="Long">
+		SELECT <include refid="querycolumns"/>,us.username  FROM sys_contect_email email 
+		left join sys_user_session us on email.user_id=us.id 
+		where source_id=#{SourceId}
+	</select>
+	
+	<!-- delete sys_contect_email by primary key -->
+  <delete id="deleteById"  parameterType="Long">
+		delete FROM sys_contect_email where id=#{id}
+  </delete>
+</mapper> 

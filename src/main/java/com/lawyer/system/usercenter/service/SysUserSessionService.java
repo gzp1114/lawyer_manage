@@ -224,4 +224,17 @@ public class SysUserSessionService {
 		return results; 
 	} 
 	
+	/**
+	 * 按登陆名称查询用户信息
+	 * @return Results
+	 */
+	public Results findAll(){
+		Results results = new Results(
+				UserCenterContents.API_RETURN_STATUS.NORMAL.value(),
+				UserCenterContents.API_RETURN_STATUS.NORMAL.desc());
+		List<SysUserSession> users = sysUserSessionDao.findAll();
+		results.setData(users);
+		return results;
+	}
+	
 }

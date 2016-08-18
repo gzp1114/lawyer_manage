@@ -187,11 +187,16 @@
 			</where>
 	</select>
 
-	<!-- query sys_user_session by primary key -->
+	<select id="findAll" resultMap="SysUserSessionMap">
+		SELECT
+		<include refid="columns" />
+		FROM sys_user_session where status=1
+	</select>
+
 	<select id="findById" resultMap="SysUserSessionMap" parameterType="long">
 		SELECT
 		<include refid="columns" />
-		FROM sys_user_session where id=#{id}
+		FROM sys_user_session where id=#{id} and status=1
 	</select>
 	<select id="findByLoginAccount" resultMap="SysUserSessionMap" parameterType="string">
 		SELECT 

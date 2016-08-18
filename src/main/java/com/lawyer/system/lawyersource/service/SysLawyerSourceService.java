@@ -13,11 +13,13 @@ import com.lawyer.cores.framework.mybatis.PageParameter;
 import com.lawyer.cores.result.Results;
 import com.lawyer.system.lawyersource.dao.mybatis.SysAnnouncementMapper;
 import com.lawyer.system.lawyersource.dao.mybatis.SysClaimCompanyMapper;
+import com.lawyer.system.lawyersource.dao.mybatis.SysContectEmailMapper;
 import com.lawyer.system.lawyersource.dao.mybatis.SysDebtorCompanyMapper;
 import com.lawyer.system.lawyersource.dao.mybatis.SysDebtorMapper;
 import com.lawyer.system.lawyersource.dao.mybatis.SysLawyerSourceMapper;
 import com.lawyer.system.lawyersource.domain.SysAnnouncement;
 import com.lawyer.system.lawyersource.domain.SysClaimCompany;
+import com.lawyer.system.lawyersource.domain.SysContectEmail;
 import com.lawyer.system.lawyersource.domain.SysDebtor;
 import com.lawyer.system.lawyersource.domain.SysDebtorCompany;
 import com.lawyer.system.lawyersource.domain.SysLawyerSource;
@@ -38,6 +40,8 @@ public class SysLawyerSourceService {
 	private SysAnnouncementMapper sysAnnouncementDao;
 	@Autowired
 	private SysClaimCompanyMapper sysClaimCompanyDao;
+	@Autowired
+	private SysContectEmailMapper sysContectEmailDao;
 	
 	/**
 	 * 增加案源信息
@@ -162,15 +166,16 @@ public class SysLawyerSourceService {
 		sysDebtorCompany.setAnnouncements(announcements);
 		
 		SysClaimCompany sysClaimCompany = sysClaimCompanyDao.findById(lawyerSource.getClaimId());
+		List<SysContectEmail> contectEmails= sysContectEmailDao.findBySourceId(lawyerSource.getId());
 		
 		lawyerSource.setDebtorCompany(sysDebtorCompany);
 		lawyerSource.setClaimCompany(sysClaimCompany);
+		lawyerSource.setContectEmails(contectEmails);
 		
 		Map<String, Object> rmap = new HashMap<String, Object>();
 		rmap.put("lawyerSource", lawyerSource);
 		rmap.put("lawyerCount", debtors.size()+announcements.size());
-		rmap.put("debtorCount", debtors.size());
-		rmap.put("announcementCount", announcements.size());
+		rmap.put("contectCount", contectEmails.size());
 		
 		results.setData(rmap);
 		return results; 

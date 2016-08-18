@@ -26,12 +26,14 @@ public class SysContectEmail extends DomainBase implements Serializable{
 	/**
 	*  邮件地址
 	*/
-	private Long emailAddress;
+	private String emailAddress;
 
 	/**
 	*  发送用户id
 	*/
 	private Long userId;
+	
+	private String username;
 
 	/**
 	*  快递发送时间
@@ -74,11 +76,11 @@ public class SysContectEmail extends DomainBase implements Serializable{
 		return sourceId;
 	}
 	
-	public void setEmailAddress(Long emailAddress){
+	public void setEmailAddress(String emailAddress){
 		this.emailAddress = emailAddress;
 	}
 	
-	public Long getEmailAddress(){
+	public String getEmailAddress(){
 		return emailAddress;
 	}
 	
@@ -129,6 +131,15 @@ public class SysContectEmail extends DomainBase implements Serializable{
 	public Long getOperatorId(){
 		return operatorId;
 	}
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);

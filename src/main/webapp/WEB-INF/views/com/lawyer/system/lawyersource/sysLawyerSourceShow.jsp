@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/static/common/default.jsp"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -74,7 +75,7 @@
 										<span>法律诉讼(${result.lawyerCount })</span>
 									</li>
 									<li>
-										<span>联系信息(0)</span>
+										<span>联系信息(${result.contectCount })</span>
 									</li>
 									<li>
 										<span>签约信息</span>
@@ -135,8 +136,8 @@
 								<div class="new1_2">
 									<div class="title_top clearfix">
 										<ul class="new1_title fl" id="activity_content2">
-											<li class="title_current"><span> 被执行人信息(${result.debtorCount}) </span></li>
-											<li><span>法院公告(${result.announcementCount})</span></li>
+											<li class="title_current"><span> 被执行人信息(${fn:length(result.lawyerSource.debtorCompany.debtors)}) </span></li>
+											<li><span>法院公告(${fn:length(result.lawyerSource.debtorCompany.announcements)})</span></li>
 
 										</ul>
 									</div>
@@ -197,7 +198,7 @@
 								<div class="new1_2">
 									<div class="title_top clearfix">
 										<ul class="new1_title fl" id="activity_content3">
-											<li class="title_current"><span>邮件(0)</span></li>
+											<li class="title_current"><span>邮件(${fn:length(result.lawyerSource.contectEmails)})</span></li>
 											<li><span>电话(0)</span></li>
 											<li><span>快递(0)</span></li>
 											<li><span>传真(0)</span></li>
@@ -207,7 +208,32 @@
 									</div>
 									<div class="list_content3 ticket_list">
 										<div class="list1 clearfix">
-											暂无邮件联系信息
+											<c:forEach var="res" items="${result.lawyerSource.contectEmails}" varStatus="status">
+											  <c:if test="${status.index%2 == '0'}">
+											  	<ul class="list1_left">
+													<li>邮件地址：<span>${res.emailAddress }</span></li>
+													<li>发送人：<span>${res.username }</span></li>
+													<li>发送时间：<span>${res.sendTime }</span></li>
+													<li>发送结果：<span>${res.sendResult }</span></li>
+													<li>备注：<span>${res.note }</span></li>
+												</ul>
+											  </c:if>
+											 
+											  <c:if test="${status.index%2 != '0'}">
+											  	<ul class="list1_right">
+													<li>邮件地址：<span>${res.emailAddress }</span></li>
+													<li>发送人：<span>${res.username }</span></li>
+													<li>发送时间：<span>${res.sendTime }</span></li>
+													<li>发送结果：<span>${res.sendResult }</span></li>
+													<li>备注：<span>${res.note }</span></li>
+												</ul>
+											  </c:if>
+											</c:forEach>
+											<c:if test="${empty result.lawyerSource.contectSign}">
+												<ul class="list1_right">
+													<li><a href="${ctx}/sysContectEmail/toAdd/${result.lawyerSource.id}" >+添加新信息</a></li>
+												</ul>
+											</c:if>
 										</div>
 									</div>
 									<div class="list_content3 hidden">

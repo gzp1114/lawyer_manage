@@ -294,5 +294,20 @@ public class sysUserController {
 		return results;
 	}
 	
+	/**
+	 * <p>获取全部用户信息</p>
+	 */
+	@RequestMappingName(value = "获取全部用户信息")
+	@RequestMapping(value = "all", method = RequestMethod.POST)
+	@ResponseBody
+	public Results all(HttpServletRequest request) {
+		Results results = new Results(
+				UserCenterContents.API_RETURN_STATUS.NORMAL.value(),
+				UserCenterContents.API_RETURN_STATUS.NORMAL.desc());
+		
+		results = sysUserSessionService.findAll();
+		return results;
+	}
+	
 	
 }

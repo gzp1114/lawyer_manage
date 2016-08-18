@@ -33,6 +33,12 @@ public interface SysUserSessionMapper {
 	List<SysUserSession> searchByPage(Map<String,Object> searchParams);
 
 	/**
+	 * 获取全部用户信息
+	 * @return
+	 */
+	public List<SysUserSession> findAll();
+	
+	/**
 	 * query sys_user_session by primary key
 	 * 
 	 * @param

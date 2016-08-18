@@ -21,6 +21,7 @@
 	<script type="text/javascript" src="${ctx}/static/tools/page.js"></script>
 
     <!--日历控件-->
+    <script type="text/javascript" src="${ctx}/static/threadui/datejs/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/threadui/datejs/jquery-ui-1.7.1.custom.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/threadui/datejs/moment.js"></script>
     <script type="text/javascript" src="${ctx}/static/threadui/datejs/daterangepicker.js"></script>

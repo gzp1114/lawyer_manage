@@ -48,7 +48,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>组织结构代码：</p>
+							<p style="background-image: none;">组织结构代码：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -59,7 +59,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>注册号：</p>
+							<p style="background-image: none;">注册号：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -70,7 +70,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>公司类型：</p>
+							<p style="background-image: none;">公司类型：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -81,7 +81,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>法人：</p>
+							<p style="background-image: none;">法人：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -92,7 +92,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>法人身份证号：</p>
+							<p style="background-image: none;">法人身份证号：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -103,7 +103,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>成立日期：</p>
+							<p style="background-image: none;">成立日期：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -114,7 +114,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>注册资金：</p>
+							<p style="background-image: none;">注册资金：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -125,7 +125,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>营业开始日期：</p>
+							<p style="background-image: none;">营业开始日期：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -136,7 +136,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>营业结束日期：</p>
+							<p style="background-image: none;">营业结束日期：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -147,7 +147,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>登记机关：</p>
+							<p style="background-image: none;">登记机关：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -158,7 +158,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>公司地址：</p>
+							<p style="background-image: none;">公司地址：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -169,7 +169,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>经营状态：</p>
+							<p style="background-image: none;">经营状态：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
@@ -180,7 +180,7 @@
 					<div class="clearfix"></div>
 					<dl class="movie_fill">
 						<dt class="movie_word clearfix">
-							<p>备注：</p>
+							<p style="background-image: none;">备注：</p>
 						</dt>
 						<dd class="mleft_99">
 							<div class="movie_type cinema_feed">
