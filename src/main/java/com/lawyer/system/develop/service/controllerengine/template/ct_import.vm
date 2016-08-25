@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.web.Servlets;
 
-import com.ariadnethread.cores.framework.mybatis.PageParameter;
-import com.ariadnethread.cores.framework.spring.RequestMappingName;
-import com.ariadnethread.cores.result.Results;
-import com.ariadnethread.cores.tools.jackson.JacksonUtil;
+import com.lawyer.cores.framework.mybatis.PageParameter;
+import com.lawyer.cores.framework.spring.RequestMappingName;
+import com.lawyer.cores.result.Results;
+import com.lawyer.cores.tools.jackson.JacksonUtil;
 ##替换包路径及类名
 import ${packagePath}.domain.${tableClassCode};
 import ${packagePath}.service.${tableClassCode}Service;

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,10 @@ public class SysDebtorCompanyService<K> {
 	 */
 	public Results add(SysDebtorCompany sysDebtorCompany){
 		
+		SysUserSession user = (SysUserSession) SecurityUtils.getSubject().getSession().getAttribute("sysUser");
+		
+		sysDebtorCompany.setOperatorId(user.getId());
+		sysDebtorCompany.setCreateTime(new Date());
 		sysDebtorCompanyDao.save(sysDebtorCompany);
 		
 		Results results = new Results(
