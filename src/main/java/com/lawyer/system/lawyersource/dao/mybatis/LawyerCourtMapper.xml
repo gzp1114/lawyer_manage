@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point Dao interface -->
+<mapper namespace="com.lawyer.system.lawyersource.dao.mybatis.LawyerCourtMapper">
+	<!-- lawyer_court query field-->
+	<sql id="columns">
+      Id,
+      pid,
+      court_name,
+      number
+	</sql>
+	
+	<!-- lawyer_court result map-->
+  <resultMap type="LawyerCourt" id="LawyerCourtMap">
+		<id column="Id" property="id"/>
+    	<result column="pid" property="pid"/>
+    	<result column="court_name" property="courtName"/>
+    	<result column="number" property="number"/>
+  </resultMap>
+  
+  <!-- save lawyer_court -->
+  <insert id="save" parameterType="LawyerCourt" >
+		insert into lawyer_court (
+		<include refid="columns"/>)
+			values (
+				#{id},
+				#{pid},
+				#{courtName},
+				#{number}
+			)
+	</insert>
+	
+	<!-- update lawyer_court -->
+	<update id="update" parameterType="LawyerCourt">
+	    UPDATE lawyer_court 
+	    <set>
+			<if test="pid != null">pid = #{pid}, </if>
+			<if test="courtName != null">court_name = #{courtName}, </if>
+			<if test="number != null">number = #{number}, </if>
+	    </set>
+	    WHERE Id = #{id}
+  </update>
+  
+  <!-- 分页查询 -->
+	<select id="searchByPage" parameterType="map" resultMap="LawyerCourtMap">
+		SELECT <include refid="columns" /> FROM lawyer_court
+			<where>
+				<if test="id != null and id !=''"> Id = #{id} </if>
+				<if test="pid != null and pid !=''"> and pid = #{pid} </if>
+				<if test="courtName != null and courtName !=''"> and court_name = #{courtName} </if>
+				<if test="number != null and number !=''"> and number = #{number} </if>
+			</where>
+	</select>
+  
+  <!-- query lawyer_court by primary key -->
+  <select id="findById"  resultMap="LawyerCourtMap" parameterType="Long">
+		SELECT <include refid="columns"/>  FROM lawyer_court where Id=#{id}
+	</select>
+	
+	<!-- delete lawyer_court by primary key -->
+  <delete id="deleteById"  parameterType="Long">
+		delete FROM lawyer_court where Id=#{id}
+  </delete>
+  
+  
+  <select id="findProvinces"  resultMap="LawyerCourtMap" >
+		SELECT <include refid="columns"/>  FROM lawyer_court where pid=0
+	</select>
+	
+	<select id="findByPid"  resultMap="LawyerCourtMap" parameterType="Long">
+		select <include refid="columns"/>  from 
+		(select c.Id,c.pid,c.number,cn.same_name as court_name,LENGTH(cn.same_name) as namesize from lawyer_court c left join lawyer_court_name cn on c.Id=cn.court_id
+		where pid=#{id} order by namesize desc
+		) t group by t.Id
+	</select>
+  
+</mapper> 

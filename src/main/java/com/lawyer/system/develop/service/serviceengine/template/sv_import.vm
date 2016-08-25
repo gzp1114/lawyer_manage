@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ariadnethread.cores.framework.mybatis.PageParameter;
-import com.ariadnethread.cores.result.Results;
+import com.lawyer.cores.framework.mybatis.PageParameter;
+import com.lawyer.cores.result.Results;
 import ${packagePath}.dao.mybatis.${tableClassCode}Mapper;
 import ${packagePath}.domain.${tableClassCode};
 

@@ -101,26 +101,29 @@
 									<div class="list_content2 ticket_list">
 										<div class="list1 clearfix">
 										<c:forEach var="res" items="${result.debtorCompany.debtors}" varStatus="status">
-											  <c:if test="${status.index%2 == '0'}">
-											  	<ul class="list1_left">
-													<li>执行法院：<span>${res.execCourtname }</span></li>
-													<li>立案时间：<span>${res.caseCreatetime }</span></li>
-													<li>    案号：<span>${res.casecode }</span></li>
-													<li>执行标的：<span>${res.executeMoney }</span></li>
-													<li>案件状态：<span>${res.caseState }</span></li>
-												</ul>
-											  </c:if>
-											 
-											  <c:if test="${status.index%2 != '0'}">
-											  	<ul class="list1_right">
-													<li>执行法院：<span>${res.execCourtname }</span></li>
-													<li>立案时间：<span>${res.caseCreatetime }</span></li>
-													<li>    案号：<span>${res.casecode }</span></li>
-													<li>执行标的：<span>${res.executeMoney }</span></li>
-													<li>案件状态：<span>${res.caseState }</span></li>
-												</ul>
-											  </c:if>
+										  <c:if test="${status.index%2 == '0'}">
+										  	<ul class="list1_left">
+												<li>执行法院：<span>${res.execCourtname }</span></li>
+												<li>立案时间：<span>${res.caseCreatetime }</span></li>
+												<li>    案号：<span>${res.casecode }</span></li>
+												<li>执行标的：<span>${res.executeMoney }</span></li>
+												<li>案件状态：<span>${res.caseState }</span></li>
+											</ul>
+										  </c:if>
+										 
+										  <c:if test="${status.index%2 != '0'}">
+										  	<ul class="list1_right">
+												<li>执行法院：<span>${res.execCourtname }</span></li>
+												<li>立案时间：<span>${res.caseCreatetime }</span></li>
+												<li>    案号：<span>${res.casecode }</span></li>
+												<li>执行标的：<span>${res.executeMoney }</span></li>
+												<li>案件状态：<span>${res.caseState }</span></li>
+											</ul>
+										  </c:if>
 										</c:forEach>
+										<ul class="list1_right">
+											<li><a href="${ctx}/sysDebtor/toAdd/${result.debtorCompany.id}" >+添加新信息</a></li>
+										</ul>
 										</div>
 									</div>
 									<div class="list_content2 hidden">
@@ -146,6 +149,9 @@
 												</ul>
 											  </c:if>
 										</c:forEach>
+										<ul class="list1_right">
+											<li><a href="${ctx}/sysDebtor/toAdd/${result.debtorCompany.id}" >+添加新信息</a></li>
+										</ul>
 										</div>
 									</div>
 								</div>
