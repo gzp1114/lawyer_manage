@@ -100,7 +100,7 @@ public class LoginController {
 			request.getSession().setAttribute("menutree", results.getData());
 			
 			
-			result = "/toIndex";
+			result = "/index/toIndex";
 			results.setData(result);
 		} catch (Exception e) {
 			result = "/toLogin";

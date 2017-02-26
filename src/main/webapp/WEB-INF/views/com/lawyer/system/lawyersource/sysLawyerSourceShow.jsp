@@ -33,8 +33,6 @@
 </style>
 </head>
 <body>
-	<script
-		src="${ctx}/static/threadui/thirdtree/ztree/js/jquery.ztree.core.js"></script>
 	<div class="cinema_tip">
 		<div class="cinema_subject clearfix">
 			<div class="cinema_title">

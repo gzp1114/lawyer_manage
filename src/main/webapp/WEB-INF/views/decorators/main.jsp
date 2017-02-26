@@ -8,6 +8,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><sitemesh:title/></title>
+	<link rel="shortcut icon" type="image/x-icon" href="${ctx}/static/favicon.ico" media="screen" /> 
 
     <link type="text/css"  rel="stylesheet" href="${ctx}/static/threadui/css/reset.css">
     <link type="text/css"  rel="stylesheet" href="${ctx}/static/threadui/css/style.css">   

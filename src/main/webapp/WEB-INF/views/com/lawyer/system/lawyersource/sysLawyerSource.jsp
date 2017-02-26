@@ -57,7 +57,7 @@
 		<div class="cinema_list">
 		    <div class="movie_button">
 			    <%-- <shiro:hasPermission name="sysLawyerSource:add"> --%>
-			    	<a class="movie_new" onclick="window.location='${ctx}/sysLawyerSource/toAdd';" style="background-color: rgb(75, 208, 131); color: rgb(255, 255, 255);">新建</a>
+			    	<%-- <a class="movie_new" onclick="window.location='${ctx}/sysLawyerSource/toAdd';" style="background-color: rgb(75, 208, 131); color: rgb(255, 255, 255);">新建</a> --%>
 			</div>
 		    <div  class="column_content">
 				 <table width="100%" height="" border="0" cellpadding="0" cellspacing="1" class="border_top">

@@ -10,8 +10,8 @@
     		width:100%;
     	}
    	 </style>
+   	 <link rel="shortcut icon" type="image/x-icon" href="${ctx}/static/favicon.ico" media="screen" /> 
 </head>
-
 <body>
    <div class="login_wapper">
         <div class="login_title">

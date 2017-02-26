@@ -12,7 +12,7 @@ import com.lawyer.cores.framework.spring.RequestMappingName;
 
 
 @Controller
-//@RequestMapping("/index")
+@RequestMapping("/index")
 public class IndexController {
 	
 	private static Logger logger = LoggerFactory.getLogger(IndexController.class);
